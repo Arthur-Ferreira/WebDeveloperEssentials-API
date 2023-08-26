@@ -1,4 +1,7 @@
 <%- include('../includes/head', {pageTitle: 'Signup' })%>
+
+<link rel="stylesheet" href="css/forms.css">
+<link rel="stylesheet" href="css/auth.css">
   </head>
 
   <body>
@@ -6,7 +9,7 @@
 
       <main>
         <h1>Create New Account</h1>
-        <form action="" method="">
+        <form action="/signup" method="POST">
           <p>
             <label for="email">E-Mail</label>
             <input type="email" name="email" id="email" required>
