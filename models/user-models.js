@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs');
+
 const db = require('../data/databse');
 
 class User {
@@ -11,13 +13,28 @@ class User {
       city: city
     };
   }
+
+  getUserWitSameEmail() {
+    return db.getDb().collection('users').findOne({
+      email: this.email
+    });
+  }
   
-  signup() {
-    db.getDb().collection('users').insertOne({
+  async signup() {
+    const hashedPassword = await bcrypt.hash(this.password, 12);
+
+    await db.getDb().collection('users').insertOne({
       email: this.email,
-      password: this.password,
-      name: this.fullname,
+      password: hashedPassword,
+      name: this.name,
       adress: this.adress
     });
   }
+
+  hasMatchingPassword(hashedPassword) {
+    return bcrypt.compare(this.password, hashedPassword);
+  }
 }
+
+
+module.exports = User;

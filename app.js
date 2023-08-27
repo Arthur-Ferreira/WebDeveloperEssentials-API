@@ -1,20 +1,36 @@
 const path = require('path');
 
 const express = require('express');
+const csurf = require('csurf');
+const expressSession = require('express-session');
 
 const db = require('./data/databse');
+const baseRoutes = require('./routes/base-routes');
 const authRoutes = require('./routes/auth-routes');
-const e = require('express');
+const productsRoutes = require('./routes/products-routes');
+
+const addCsrfTokenMiddleware = require('./middlewares/csrf-token');
+const errorHandlerMiddleware = require('./middlewares/error-handler');
+const createSessionConfig = require('./config/session');
 
 const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use(express.static('public'))
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: false }));
 
+app.use(expressSession());
+app.use(csurf());
 
+app.use(addCsrfTokenMiddleware);
+
+app.use(baseRoutes);
 app.use(authRoutes);
+app.use(productsRoutes);
+
+app.use(errorHandlerMiddleware);
 
 db.connectToDatabase()
   .then(function () {
