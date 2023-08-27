@@ -11,9 +11,12 @@ const productsRoutes = require('./routes/products-routes');
 
 const addCsrfTokenMiddleware = require('./middlewares/csrf-token');
 const errorHandlerMiddleware = require('./middlewares/error-handler');
+const checkAuthStatusMiddleware = require('./middlewares/check-auth');
 const createSessionConfig = require('./config/session');
 
 const app = express();
+
+const sessionConfig = createSessionConfig()
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -21,10 +24,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
 
-app.use(expressSession());
+app.use(expressSession(sessionConfig));
 app.use(csurf());
 
 app.use(addCsrfTokenMiddleware);
+app.use(checkAuthStatusMiddleware);
 
 app.use(baseRoutes);
 app.use(authRoutes);

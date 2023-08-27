@@ -2,10 +2,10 @@ const expressSession = require('express-session');
 const mongoDbStore = require('connect-mongodb-session');
 
 function createSessionStore() {
-  const MongoDbStore = mongoDbStore(expressSession);
+  const MongoDBStore = mongoDbStore(expressSession);
 
-  new MongoDbStore({
-    uri: 'mongodb://lolcahost:27017',
+  const store = new MongoDBStore({
+    uri: 'mongodb://localhost:27017',
     databaseName: 'online-shop',
     collection: 'sessions'
   });
