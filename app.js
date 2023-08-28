@@ -4,7 +4,7 @@ const express = require('express');
 const csurf = require('csurf');
 const expressSession = require('express-session');
 
-const db = require('./data/databse');
+const db = require('./data/database');
 const baseRoutes = require('./routes/base-routes');
 const authRoutes = require('./routes/auth-routes');
 const productsRoutes = require('./routes/products-routes');
@@ -23,6 +23,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static('public'));
+app.use('/products/assets', express.static('product-data'));
 app.use(express.urlencoded({ extended: false }));
 
 app.use(expressSession(sessionConfig));

@@ -14,9 +14,13 @@
           </p>
         </section>
         <section>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam vel earum praesentium ab optio modi
-            blanditiis excepturi deleniti cupiditate enim porro, nemo reiciendis a illum qui quas consequuntur suscipit
-            accusantium!</p>
+          <ul>
+            <% for( const product of products ) { %>
+              <li>
+                <%- include('includes/product-item', { product: product })%>
+              </li>
+              <% } %>
+          </ul>
         </section>
       </main>
 
