@@ -10,14 +10,14 @@ async function getProducts(req, res, next) {
   }
 }
 
-function getNewProducts(req, res) {
+function getNewProduct(req, res) {
   res.render('admin/products/new-product');
 }
 
 async function createNewProducts(req, res, next) {
   const product = new Product({
     ...req.body,
-    iamge: req.file.filename
+    image: req.file.filename,
   });
 
   try {
@@ -74,7 +74,7 @@ async function deleteProduct(req, res, next) {
 
 module.exports = {
   getProducts: getProducts,
-  getNewProducts: getNewProducts,
+  getNewProduct: getNewProduct,
   createNewProducts: createNewProducts,
   getUpdateProduct: getUpdateProduct,
   updateProduct: updateProduct,
