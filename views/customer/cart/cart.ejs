@@ -1,0 +1,27 @@
+<%- include('../../shared/includes/head', {pageTitle: 'Cart' })%>
+  <link rel="stylesheet" href="/css/cart.css">
+  <script src="/js/item-management.js" defer></script>
+
+  </head>
+
+  <body>
+    <%- include('../../shared/includes/header')%>
+
+      <main>
+        <h1>Your Cart</h1>
+        <ul id="cart-item">
+          <% for( const cartItem of locals.cart.items ) { %>
+            <li>
+              <%- include('includes/cart-item', { item: cartItem })%>
+            </li>
+            <% } %>
+        </ul>
+        <div id="cart-total">
+          <p>Total: $<%= locals.cart.totalPrice.toFixed(2) %>
+          </p>
+          <button class="btn">Buy Products</button>
+        </div>
+      </main>
+      </main>
+
+      <%- include('../../shared/includes/footer')%>
