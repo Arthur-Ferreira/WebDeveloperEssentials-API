@@ -1,27 +1,29 @@
-<%- include('../../shared/includes/head', {pageTitle: 'Cart' })%>
-  <link rel="stylesheet" href="/css/cart.css">
-  <script src="/js/item-management.js" defer></script>
+<%- include('../../shared/includes/head', { pageTitle: 'Your Cart' }) %>
+<link rel="stylesheet" href="/styles/cart.css">
+<script src="/scripts/cart-item-management.js" defer></script>
+</head>
+<body>
+  <%- include('../../shared/includes/header') %>
+  <main>
+    <h1>Your Cart</h1>
+    <ul id="cart-items">
+      <% for (const cartItem of locals.cart.items) { %>
+        <li>
+          <%- include('includes/cart-item', { item: cartItem }) %>
+        </li>
+      <% } %>
+    </ul>
+    <div id="cart-total">
+      <p>Total: $<span id="cart-total-price"><%= locals.cart.totalPrice.toFixed(2) %></span></p>
 
-  </head>
-
-  <body>
-    <%- include('../../shared/includes/header')%>
-
-      <main>
-        <h1>Your Cart</h1>
-        <ul id="cart-item">
-          <% for( const cartItem of locals.cart.items ) { %>
-            <li>
-              <%- include('includes/cart-item', { item: cartItem })%>
-            </li>
-            <% } %>
-        </ul>
-        <div id="cart-total">
-          <p>Total: $<%= locals.cart.totalPrice.toFixed(2) %>
-          </p>
+      <% if (locals.isAuth) { %>
+        <form action="/orders" method="POST">
+          <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
           <button class="btn">Buy Products</button>
-        </div>
-      </main>
-      </main>
-
-      <%- include('../../shared/includes/footer')%>
+        </form>
+      <% } else { %>
+        <p id="cart-total-fallback">Log in to proceed and purchase the items.</p>
+      <% } %>
+    </div>
+  </main>
+<%- include('../../shared/includes/footer') %>
