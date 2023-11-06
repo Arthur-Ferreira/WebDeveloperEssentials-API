@@ -1,5 +1,5 @@
 <h1 align="center">
-    Web Development Essentials
+  Web Developer Essentials
 </h1>
 <img src="public/assets/layout.png" alt="WDE Layout"/>
 
