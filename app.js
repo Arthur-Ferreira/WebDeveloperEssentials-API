@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 const csrf = require('csurf');
 const expressSession = require('express-session');
+const dotenv = require('dotenv').config();
 
 const createSessionConfig = require('./config/session');
 const db = require('./data/database');
@@ -21,6 +22,8 @@ const cartRoutes = require('./routes/cart.routes');
 const ordersRoutes = require('./routes/orders.routes');
 
 const app = express();
+
+const port = process.env.PORT;
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -54,7 +57,9 @@ app.use(errorHandlerMiddleware);
 
 db.connectToDatabase()
   .then(function () {
-    app.listen(3000);
+    app.listen(port, () => {
+      console.log(`App runing at: http://localhost:${port}`);
+    });
   })
   .catch(function (error) {
     console.log('Failed to connect to the database!');

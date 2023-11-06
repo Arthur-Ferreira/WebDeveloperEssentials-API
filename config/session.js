@@ -15,7 +15,7 @@ function createSessionStore() {
 
 function createSessionConfig() {
   return {
-    secret: 'super-secret',
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
     store: createSessionStore(),
