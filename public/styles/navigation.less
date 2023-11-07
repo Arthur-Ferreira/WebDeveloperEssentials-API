@@ -1,0 +1,146 @@
+@import "variables";
+
+main {
+  margin-top: 6rem;
+
+  @media (min-width: 48rem) {
+    margin-top: 0;
+  }
+}
+
+#main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 60rem;
+  height: 5rem;
+  margin: 0 auto;
+  padding: 0 @space-6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid @color-primary-500;
+  background-color: @color-gray-500;
+
+  @media (min-width: 48rem) {
+    position: static;
+  }
+
+  nav {
+    display: none;
+
+    @media (min-width: 48rem) {
+      display: block;
+    }
+  }
+}
+
+#logo {
+  a {
+    font-weight: bold;
+    font-size: 2rem;
+  }
+}
+
+
+.nav-items {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+
+  li {
+    margin: 0 @space-2;
+  }
+
+  button {
+    cursor: pointer;
+    font: inherit;
+    border: 1px solid @color-primary-100;
+    border-radius: @border-radius-small;
+    background-color: transparent;
+    padding: @space-2 @space-4;
+
+    @media (min-width: 48rem) {
+      color: @color-primary-500;
+      border-color: @color-primary-500;
+    }
+  }
+}
+
+#mobile-menu-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border: none;
+  cursor: pointer;
+  width: 2.25rem;
+  height: 2.25rem;
+  background-color: transparent;
+  padding: 0;
+
+  @media (min-width: 48rem) {
+    display: none;
+  }
+
+  span {
+    width: 2.25rem;
+    height: 0.2rem;
+    background-color: @color-gray-100;
+  }
+}
+
+#mobile-menu {
+  position: fixed;
+  top: 5rem;
+  left: 0;
+  height: calc(100vh - 5rem);
+  width: 100%;
+  background-color: @color-gray-700;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+
+  @media (min-width: 48rem) {
+    display: none;
+  }
+
+  #mobile-menu.open {
+    display: flex;
+  }
+
+  nav {
+    height: 20rem;
+    width: 90%;
+    margin: @space-4 auto;
+  }
+
+
+  .nav-items {
+
+    @media (min-width: 48rem) {
+      flex-direction: row;
+    }
+
+    a,
+    button {
+      font-size: 1.75rem;
+      color: @color-primary-100;
+    }
+
+    a {
+      @media (min-width: 48rem) {
+        padding: @space-2 @space-4;
+        border-radius: @border-radius-small;
+      }
+
+      &:hover,
+      &:active {
+        background-color: @color-primary-500-bg;
+      }
+    }
+
+  }
+}
