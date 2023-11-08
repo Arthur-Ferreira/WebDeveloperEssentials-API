@@ -2,9 +2,10 @@
   "name": "21_milestoneproject",
   "version": "1.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "nodemon",
+    "less": "less-watch-compiler ./public/less ./public/styles",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -19,6 +20,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "less": "^4.2.0",
+    "less-watch-compiler": "^1.16.3",
     "mongodb": "^4.1.0",
     "multer": "^1.4.3",
     "stripe": "^13.3.0",

@@ -1,0 +1,47 @@
+.order-item {
+  background-color: #46413c;
+  border-radius: 4px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+.order-summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+@media (min-width: 48rem) {
+  .order-summary {
+    flex-direction: row;
+  }
+}
+.order-summary h2,
+.order-summary p {
+  font-size: 1.25rem;
+  font-weight: normal;
+  margin: 0;
+}
+.order-item-price {
+  color: #007cb2;
+}
+.order-item .status {
+  display: flex;
+  min-width: 15rem;
+}
+.order-item .status .badge {
+  margin-right: 1rem;
+}
+.order-item select {
+  font: inherit;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+.order-details ul {
+  list-style: square;
+  margin-left: 2rem;
+}
+.order-details ul li {
+  margin-bottom: 0.5rem;
+}
