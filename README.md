@@ -2,8 +2,7 @@
   Web Developer Essentials
 </h1>
 
-<video src="public/assets/WDE_Store.mp4" type="video/mp4" auto-play="true" loop="loop" controls></video>
-
+<img style="width: 100%;" src="public/assets/layout.png" alt="WDE Layout"/>
 
 <nav>
   <ul style="list-style:none;display:flex;justify-content:center;gap:40px;">
