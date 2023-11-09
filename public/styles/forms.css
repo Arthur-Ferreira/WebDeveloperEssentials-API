@@ -1,17 +1,17 @@
 form hr {
-  border-color: var(--color-primary-200);
-  margin: var(--space-4);
+  border-color: #00b2ff;
+  margin: 1rem;
 }
 form label {
-  color: var(--color-gray-100);
+  color: #c6c1b9;
   display: block;
-  margin-bottom: var(--space-2);
+  margin-bottom: 0.5rem;
 }
 form input,
 form textarea {
   font: inherit;
-  padding: var(--space-2);
-  border-radius: var(--border-radius-small);
+  padding: 0.5rem;
+  border-radius: 4px;
   border: none;
   width: 90%;
 }
@@ -27,5 +27,5 @@ form #image-upload-control img {
   width: 4rem;
   height: 4rem;
   object-fit: cover;
-  border-radius: var(--border-radius-small);
+  border-radius: 4px;
 }

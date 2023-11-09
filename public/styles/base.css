@@ -2,8 +2,8 @@
   box-sizing: border-box;
 }
 body {
-  background-color: #282c2d;
-  color: #cfc9c3;
+  background-color: #202324;
+  color: #c6c1b9;
   margin: 0;
   font-family: "Montserrat", "sans-serif";
 }
@@ -20,7 +20,7 @@ ol {
 }
 a {
   text-decoration: none;
-  color: #0096d8;
+  color: #35c1ff;
 }
 .btn {
   cursor: pointer;
@@ -42,7 +42,7 @@ a {
 }
 .btn-alt:hover,
 .btn-alt:active {
-  background-color: #3a3c3f;
+  background-color: #57caff;
 }
 .alert {
   border-radius: border-radius-small;

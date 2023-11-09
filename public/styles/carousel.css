@@ -44,6 +44,7 @@
   top: 45%;
   height: 2rem;
   cursor: pointer;
+  z-index: 1;
 }
 #before img,
 #next img {
@@ -55,7 +56,7 @@
 #before:hover {
   opacity: 0.5;
   transition: 2s;
-  background-color: #cfc9c3;
+  background-color: #c6c1b9;
 }
 #next {
   right: 10%;
@@ -63,5 +64,5 @@
 #next:hover {
   opacity: 0.5;
   transition: 2s;
-  background-color: #cfc9c3;
+  background-color: #c6c1b9;
 }

@@ -44,7 +44,7 @@
   height: 6rem;
   object-fit: cover;
   border-radius: 6px;
-  border: 1px solid #cfc9c3;
+  border: 1px solid #c6c1b9;
 }
 @media (min-width: 48rem) {
   #product-details img {
