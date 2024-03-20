@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon",
+    "build": "node app.js",
     "less": "less-watch-compiler ./public/less ./public/styles",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
