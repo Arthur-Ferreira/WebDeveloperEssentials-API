@@ -21,14 +21,14 @@
     "ejs": "^3.1.9",
     "express": "^4.19.1",
     "express-session": "^1.18.0",
-    "less": "^4.2.0",
-    "less-watch-compiler": "^1.16.3",
     "mongodb": "^6.5.0",
     "multer": "^1.4.5-lts.1",
     "stripe": "^14.22.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "less": "^4.2.0",
+    "less-watch-compiler": "^1.16.3",
     "nodemon": "^3.1.0"
   },
   "overrides": {
