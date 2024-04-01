@@ -1,0 +1,7 @@
+node_modules
+product-data
+public/assets
+vercel.json
+tsconfig.json
+README.md
+.prettierrc.json
