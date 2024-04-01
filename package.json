@@ -7,6 +7,8 @@
     "dev": "dotenvx run --env-file=.env -- nodemon",
     "start": "dotenvx run --env-file=.env.production -- nodemon",
     "less": "less-watch-compiler ./public/less ./public/styles",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

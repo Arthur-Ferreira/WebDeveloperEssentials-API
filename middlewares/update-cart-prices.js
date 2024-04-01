@@ -1,10 +1,10 @@
 async function updateCartPrices(req, res, next) {
-  const cart = res.locals.cart;
+  const cart = res.locals.cart
 
-  await cart.updatePrices();
+  await cart.updatePrices()
 
   // req.session.cart = cart;
-  next();
+  next()
 }
 
-module.exports = updateCartPrices;
+module.exports = updateCartPrices

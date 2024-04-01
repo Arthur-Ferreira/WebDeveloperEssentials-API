@@ -1,10 +1,10 @@
-const User = require('../models/user.model');
-const authUtil = require('../util/authentication');
-const validation = require('../util/validation');
-const sessionFlash = require('../util/session-flash');
+const User = require('../models/user.model')
+const authUtil = require('../util/authentication')
+const validation = require('../util/validation')
+const sessionFlash = require('../util/session-flash')
 
 function getSignup(req, res) {
-  let sessionData = sessionFlash.getSessionData(req);
+  let sessionData = sessionFlash.getSessionData(req)
 
   if (!sessionData) {
     sessionData = {
@@ -14,11 +14,11 @@ function getSignup(req, res) {
       fullname: '',
       street: '',
       postal: '',
-      city: '',
-    };
+      city: ''
+    }
   }
 
-  res.render('customer/auth/signup', { inputData: sessionData });
+  res.render('customer/auth/signup', { inputData: sessionData })
 }
 
 async function signup(req, res, next) {
@@ -29,8 +29,8 @@ async function signup(req, res, next) {
     fullname: req.body.fullname,
     street: req.body.street,
     postal: req.body.postal,
-    city: req.body.city,
-  };
+    city: req.body.city
+  }
 
   if (
     !validation.userDetailsAreValid(
@@ -48,13 +48,13 @@ async function signup(req, res, next) {
       {
         errorMessage:
           'Please check your input. Password must be at least 6 character slong, postal code must be 5 characters long.',
-        ...enteredData,
+        ...enteredData
       },
       function () {
-        res.redirect('/signup');
+        res.redirect('/signup')
       }
-    );
-    return;
+    )
+    return
   }
 
   const user = new User(
@@ -64,90 +64,90 @@ async function signup(req, res, next) {
     req.body.street,
     req.body.postal,
     req.body.city
-  );
+  )
 
   try {
-    const existsAlready = await user.existsAlready();
+    const existsAlready = await user.existsAlready()
 
     if (existsAlready) {
       sessionFlash.flashDataToSession(
         req,
         {
           errorMessage: 'User exists already! Try logging in instead!',
-          ...enteredData,
+          ...enteredData
         },
         function () {
-          res.redirect('/signup');
+          res.redirect('/signup')
         }
-      );
-      return;
+      )
+      return
     }
 
-    await user.signup();
+    await user.signup()
   } catch (error) {
-    next(error);
-    return;
+    next(error)
+    return
   }
 
-  res.redirect('/login');
+  res.redirect('/login')
 }
 
 function getLogin(req, res) {
-  let sessionData = sessionFlash.getSessionData(req);
+  let sessionData = sessionFlash.getSessionData(req)
 
   if (!sessionData) {
     sessionData = {
       email: '',
-      password: '',
-    };
+      password: ''
+    }
   }
 
-  res.render('customer/auth/login', { inputData: sessionData });
+  res.render('customer/auth/login', { inputData: sessionData })
 }
 
 async function login(req, res, next) {
-  const user = new User(req.body.email, req.body.password);
-  let existingUser;
+  const user = new User(req.body.email, req.body.password)
+  let existingUser
   try {
-    existingUser = await user.getUserWithSameEmail();
+    existingUser = await user.getUserWithSameEmail()
   } catch (error) {
-    next(error);
-    return;
+    next(error)
+    return
   }
 
   const sessionErrorData = {
     errorMessage:
       'Invalid credentials - please double-check your email and password!',
     email: user.email,
-    password: user.password,
-  };
+    password: user.password
+  }
 
   if (!existingUser) {
     sessionFlash.flashDataToSession(req, sessionErrorData, function () {
-      res.redirect('/login');
-    });
-    return;
+      res.redirect('/login')
+    })
+    return
   }
 
   const passwordIsCorrect = await user.hasMatchingPassword(
     existingUser.password
-  );
+  )
 
   if (!passwordIsCorrect) {
     sessionFlash.flashDataToSession(req, sessionErrorData, function () {
-      res.redirect('/login');
-    });
-    return;
+      res.redirect('/login')
+    })
+    return
   }
 
   authUtil.createUserSession(req, existingUser, function () {
-    res.redirect('/');
-  });
+    res.redirect('/')
+  })
 }
 
 function logout(req, res) {
-  authUtil.destroyUserAuthSession(req);
-  res.redirect('/login');
+  authUtil.destroyUserAuthSession(req)
+  res.redirect('/login')
 }
 
 module.exports = {
@@ -155,5 +155,5 @@ module.exports = {
   getLogin: getLogin,
   signup: signup,
   login: login,
-  logout: logout,
-};
+  logout: logout
+}
