@@ -30,9 +30,11 @@
     "@typescript-eslint/eslint-plugin": "^7.4.0",
     "@typescript-eslint/parser": "^7.4.0",
     "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
     "less": "^4.2.0",
     "less-watch-compiler": "^1.16.3",
     "nodemon": "^3.1.0",
+    "prettier": "^3.2.5",
     "typescript": "^5.4.3"
   },
   "overrides": {
