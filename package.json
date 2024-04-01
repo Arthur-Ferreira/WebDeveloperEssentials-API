@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon",
-    "build": "node app.js",
+    "dev": "dotenvx run --env-file=.env -- nodemon",
+    "start": "dotenvx run --env-file=.env.production -- nodemon",
     "less": "less-watch-compiler ./public/less ./public/styles",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,11 +24,14 @@
     "less": "^4.2.0",
     "less-watch-compiler": "^1.16.3",
     "mongodb": "^6.5.0",
-    "multer": "^1.4.3",
-    "stripe": "^14.21.0",
+    "multer": "^1.4.5-lts.1",
+    "stripe": "^14.22.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
+  },
+  "overrides": {
+    "got": "^14.2.1"
   }
 }
