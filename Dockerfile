@@ -10,7 +10,7 @@ RUN npm install
 COPY . .
 EXPOSE 3000
 
-# CMD ["dotenvx", "run",  "--env-file=.env.production", "--", "node", "app.js"]
+# CMD ["dotenvx", "run",  "--env-file=.env", "--", "node", "app.js"]
 
 # Prepend dotenvx run
 CMD ["dotenvx", "run",  "--env-file=.env.production", "--", "node", "app.js"]
