@@ -1,9 +1,11 @@
-const User = require('../models/user.model')
-const authUtil = require('../util/authentication')
-const validation = require('../util/validation')
-const sessionFlash = require('../util/session-flash')
+import { Request, Response, NextFunction } from "express"
 
-function getSignup(req, res) {
+import User from '../models/user.model'
+import authUtil from '../util/authentication'
+import validation from '../util/validation'
+import sessionFlash from '../util/session-flash'
+
+function getSignup(req: Request, res: Response) {
   let sessionData = sessionFlash.getSessionData(req)
 
   if (!sessionData) {
@@ -21,7 +23,7 @@ function getSignup(req, res) {
   res.render('customer/auth/signup', { inputData: sessionData })
 }
 
-async function signup(req, res, next) {
+async function signup(req: Request, res: Response, next: NextFunction) {
   const enteredData = {
     email: req.body.email,
     confirmEmail: req.body['confirm-email'],
@@ -92,7 +94,7 @@ async function signup(req, res, next) {
   res.redirect('/login')
 }
 
-function getLogin(req, res) {
+function getLogin(req: Request, res: Response) {
   let sessionData = sessionFlash.getSessionData(req)
 
   if (!sessionData) {
@@ -105,7 +107,7 @@ function getLogin(req, res) {
   res.render('customer/auth/login', { inputData: sessionData })
 }
 
-async function login(req, res, next) {
+async function login(req: Request, res: Response, next: NextFunction) {
   const user = new User(req.body.email, req.body.password)
   let existingUser
   try {
@@ -145,7 +147,7 @@ async function login(req, res, next) {
   })
 }
 
-function logout(req, res) {
+function logout(req: Request, res: Response) {
   authUtil.destroyUserAuthSession(req)
   res.redirect('/login')
 }

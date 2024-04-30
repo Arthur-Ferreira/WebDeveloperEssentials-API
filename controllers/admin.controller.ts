@@ -1,7 +1,8 @@
-const Product = require('../models/product.model')
-const Order = require('../models/order.model')
+import { Request, Response, NextFunction } from "express"
+import Product from '../models/product.models'
+import Order from '../models/order.model'
 
-async function getProducts(req, res, next) {
+async function getProducts(req: Request, res: Response, next: NextFunction) {
   try {
     const products = await Product.findAll()
     res.render('admin/products/all-products', { products: products })
@@ -11,11 +12,11 @@ async function getProducts(req, res, next) {
   }
 }
 
-function getNewProduct(req, res) {
+function getNewProduct(req: Request, res: Response) {
   res.render('admin/products/new-product')
 }
 
-async function createNewProduct(req, res, next) {
+async function createNewProduct(req: Request, res: Response, next: NextFunction) {
   const product = new Product({
     ...req.body,
     image: req.file.filename
@@ -31,7 +32,7 @@ async function createNewProduct(req, res, next) {
   res.redirect('/admin/products')
 }
 
-async function getUpdateProduct(req, res, next) {
+async function getUpdateProduct(req: Request, res: Response, next: NextFunction) {
   try {
     const product = await Product.findById(req.params.id)
     res.render('admin/products/update-product', { product: product })
@@ -40,7 +41,7 @@ async function getUpdateProduct(req, res, next) {
   }
 }
 
-async function updateProduct(req, res, next) {
+async function updateProduct(req: Request, res: Response, next: NextFunction) {
   const product = new Product({
     ...req.body,
     _id: req.params.id
@@ -60,7 +61,7 @@ async function updateProduct(req, res, next) {
   res.redirect('/admin/products')
 }
 
-async function deleteProduct(req, res, next) {
+async function deleteProduct(req: Request, res: Response, next: NextFunction) {
   let product
   try {
     product = await Product.findById(req.params.id)
@@ -72,7 +73,7 @@ async function deleteProduct(req, res, next) {
   res.json({ message: 'Deleted product!' })
 }
 
-async function getOrders(req, res, next) {
+async function getOrders(req: Request, res: Response, next: NextFunction) {
   try {
     const orders = await Order.findAll()
     res.render('admin/orders/admin-orders', {
@@ -83,7 +84,7 @@ async function getOrders(req, res, next) {
   }
 }
 
-async function updateOrder(req, res, next) {
+async function updateOrder(req: Request, res: Response, next: NextFunction) {
   const orderId = req.params.id
   const newStatus = req.body.newStatus
 
