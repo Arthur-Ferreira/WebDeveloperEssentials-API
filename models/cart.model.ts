@@ -1,13 +1,19 @@
-const Product = require('./product.model')
+import Product from './product.model'
+
+interface ICart {
+  product: Product;
+  quantity: Number;
+  totalPrice: Number;
+}
 
 class Cart {
-  constructor(items = [], totalQuantity = 0, totalPrice = 0) {
+  constructor(items: ICart[] = [], totalQuantity = 0, totalPrice = 0) {
     this.items = items
     this.totalQuantity = totalQuantity
     this.totalPrice = totalPrice
   }
 
-  async updatePrices() {
+  async updatePrices(): Promise<void> {
     const productIds = this.items.map(function (item) {
       return item.product.id
     })
@@ -50,7 +56,7 @@ class Cart {
     }
   }
 
-  addItem(product) {
+  addItem(product): void {
     const cartItem = {
       product: product,
       quantity: 1,
@@ -98,4 +104,4 @@ class Cart {
   }
 }
 
-module.exports = Cart
+export default Cart
