@@ -1,6 +1,8 @@
-const Product = require('../models/product.model')
+import { Request, Response, NextFunction } from "express"
 
-async function getAllProducts(req, res, next) {
+import Product from '../models/product.model'
+
+async function getAllProducts(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const products = await Product.findAll()
     res.render('customer/products/all-products', { products: products })
@@ -9,7 +11,7 @@ async function getAllProducts(req, res, next) {
   }
 }
 
-async function getProductDetails(req, res, next) {
+async function getProductDetails(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const product = await Product.findById(req.params.id)
     res.render('customer/products/product-details', { product: product })
@@ -18,7 +20,7 @@ async function getProductDetails(req, res, next) {
   }
 }
 
-module.exports = {
-  getAllProducts: getAllProducts,
-  getProductDetails: getProductDetails
+export {
+  getAllProducts,
+  getProductDetails
 }
