@@ -1,10 +1,12 @@
-const Product = require('../models/product.model')
+import { Request, Response, NextFunction } from "express"
 
-async function getCart(req, res) {
+import Product from '../models/product.model'
+
+async function getCart(req: Request, res: Response): Promise<void> {
   res.render('customer/cart/cart')
 }
 
-async function addCartItem(req, res, next) {
+async function addCartItem(req: Request, res: Response, next: NextFunction): Promise<void> {
   let product
   try {
     product = await Product.findById(req.body.productId)
@@ -24,7 +26,7 @@ async function addCartItem(req, res, next) {
   })
 }
 
-function updateCartItem(req, res) {
+function updateCartItem(req: Request, res: Response): void {
   const cart = res.locals.cart
 
   const updatedItemData = cart.updateItem(
@@ -44,8 +46,8 @@ function updateCartItem(req, res) {
   })
 }
 
-module.exports = {
-  addCartItem: addCartItem,
-  getCart: getCart,
-  updateCartItem: updateCartItem
+export {
+  addCartItem,
+  getCart,
+  updateCartItem
 }
