@@ -1,9 +1,13 @@
-const stripe = require('stripe')(process.env.STRIPE_KEY)
+import { Request, Response, NextFunction } from "express"
 
-const Order = require('../models/order.model')
-const User = require('../models/user.model')
+import stripe from 'stripe'
 
-async function getOrders(req, res) {
+import Order from '../models/order.model'
+import User from '../models/user.model'
+
+const stripeInstance = new stripe(process.env.STRIPE_KEY)
+
+async function getOrders(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const orders = await Order.findAllForUser(res.locals.uid)
     res.render('customer/orders/all-orders', {
@@ -14,7 +18,7 @@ async function getOrders(req, res) {
   }
 }
 
-async function addOrder(req, res, next) {
+async function addOrder(req: Request, res: Response, next: NextFunction): Promise<void> {
   const cart = res.locals.cart
 
   let userDocument
@@ -35,7 +39,7 @@ async function addOrder(req, res, next) {
 
   req.session.cart = null
 
-  const session = await stripe.checkout.sessions.create({
+  const session = await stripeInstance.checkout.sessions.create({
     line_items: cart.items.map((item) => {
       return {
         price_data: {
@@ -56,17 +60,17 @@ async function addOrder(req, res, next) {
   res.redirect(303, session.url)
 }
 
-function getSuccess(req, res) {
+function getSuccess(req: Request, res: Response): void {
   res.render('customer/orders/success')
 }
 
-function getFailure(req, res) {
-  res.reder('customer/orders/failure')
+function getFailure(req: Request, res: Response): void {
+  res.render('customer/orders/failure')
 }
 
-module.exports = {
-  addOrder: addOrder,
-  getOrders: getOrders,
-  getSuccess: getSuccess,
-  getFailure: getFailure
+export {
+  addOrder,
+  getOrders,
+  getSuccess,
+  getFailure
 }
