@@ -5,7 +5,7 @@ import authUtil from '../util/authentication'
 import validation from '../util/validation'
 import sessionFlash from '../util/session-flash'
 
-function getSignup(req: Request, res: Response) {
+function getSignup(req: Request, res: Response): void {
   let sessionData = sessionFlash.getSessionData(req)
 
   if (!sessionData) {
@@ -23,7 +23,7 @@ function getSignup(req: Request, res: Response) {
   res.render('customer/auth/signup', { inputData: sessionData })
 }
 
-async function signup(req: Request, res: Response, next: NextFunction) {
+async function signup(req: Request, res: Response, next: NextFunction): Promise<void> {
   const enteredData = {
     email: req.body.email,
     confirmEmail: req.body['confirm-email'],
@@ -94,7 +94,7 @@ async function signup(req: Request, res: Response, next: NextFunction) {
   res.redirect('/login')
 }
 
-function getLogin(req: Request, res: Response) {
+function getLogin(req: Request, res: Response): void {
   let sessionData = sessionFlash.getSessionData(req)
 
   if (!sessionData) {
@@ -107,7 +107,7 @@ function getLogin(req: Request, res: Response) {
   res.render('customer/auth/login', { inputData: sessionData })
 }
 
-async function login(req: Request, res: Response, next: NextFunction) {
+async function login(req: Request, res: Response, next: NextFunction): Promise<void> {
   const user = new User(req.body.email, req.body.password)
   let existingUser
   try {
@@ -147,15 +147,15 @@ async function login(req: Request, res: Response, next: NextFunction) {
   })
 }
 
-function logout(req: Request, res: Response) {
+function logout(req: Request, res: Response): void {
   authUtil.destroyUserAuthSession(req)
   res.redirect('/login')
 }
 
-module.exports = {
-  getSignup: getSignup,
-  getLogin: getLogin,
-  signup: signup,
-  login: login,
-  logout: logout
+export {
+  getSignup,
+  getLogin,
+  signup,
+  login,
+  logout
 }
