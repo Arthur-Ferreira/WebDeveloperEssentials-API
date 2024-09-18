@@ -15,33 +15,33 @@
   "author": "Arthur Ferreira",
   "license": "ISC",
   "dependencies": {
-    "@dotenvx/dotenvx": "^0.26.0",
+    "@dotenvx/dotenvx": "^1.9.1",
     "bcryptjs": "^2.4.3",
     "connect-mongodb-session": "^5.0.0",
     "csurf": "^1.11.0",
     "dotenv": "^16.4.5",
-    "ejs": "^3.1.9",
-    "express": "^4.19.1",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
     "express-session": "^1.18.0",
-    "mongodb": "^6.5.0",
+    "mongodb": "^6.8.0",
     "multer": "^1.4.5-lts.1",
-    "stripe": "^14.22.0",
-    "uuid": "^9.0.1"
+    "stripe": "^16.8.0",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/connect-mongodb-session": "^2.4.7",
     "@types/express": "^4.17.21",
     "@types/express-session": "^1.18.0",
-    "@types/node": "^20.12.8",
-    "@typescript-eslint/eslint-plugin": "^7.4.0",
-    "@typescript-eslint/parser": "^7.4.0",
-    "eslint": "^8.57.0",
+    "@types/node": "^22.5.0",
+    "@typescript-eslint/eslint-plugin": "^8.2.0",
+    "@typescript-eslint/parser": "^8.2.0",
+    "eslint": "^9.9.0",
     "eslint-config-prettier": "^9.1.0",
     "less": "^4.2.0",
     "less-watch-compiler": "^1.16.3",
-    "nodemon": "^3.1.0",
-    "prettier": "^3.2.5",
-    "typescript": "^5.4.3"
+    "nodemon": "^3.1.4",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.4"
   },
   "overrides": {
     "got": "^14.2.1"
