@@ -7,6 +7,10 @@ interface ICart {
 }
 
 class Cart {
+  items: ICart[];
+  totalQuantity: Number;
+  totalPrice: Number;
+
   constructor(items: ICart[] = [], totalQuantity = 0, totalPrice = 0) {
     this.items = items
     this.totalQuantity = totalQuantity
@@ -18,7 +22,7 @@ class Cart {
       return item.product.id
     })
 
-    const products = await Product.findMultiple(productIds)
+    const products : Product[] = await Product.findMultiple(productIds)
 
     const deletableCartItemProductIds = []
 
@@ -56,7 +60,7 @@ class Cart {
     }
   }
 
-  addItem(product): void {
+  addItem(product: Product): void {
     const cartItem = {
       product: product,
       quantity: 1,
