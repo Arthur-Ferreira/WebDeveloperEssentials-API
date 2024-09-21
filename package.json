@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "dotenvx run --env-file=.env -- nodemon",
     "start": "dotenvx run --env-file=.env.production -- nodemon",
+    "build": "tsc && vite build",
     "less": "less-watch-compiler ./public/less ./public/styles",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
+    "type-check": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

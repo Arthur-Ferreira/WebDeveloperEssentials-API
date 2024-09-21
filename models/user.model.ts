@@ -1,6 +1,5 @@
 import * as bcrypt from 'bcryptjs'
 import mongodb from 'mongodb'
-
 import * as db from '../data/database'
 
 class User {
@@ -15,22 +14,22 @@ class User {
     this.password = userData.password
     this.fullname = userData.fullname
     this.address = {
-      street: userData.address.street,
-      postal: userData.address.postal,
-      city: userData.address.city
+      ...userData.address
     }
     if (userData.id) {
       this.id = userData.id.toString();
     }
   }
 
-  static async findById(userId: string): Promise<User> {
+  static async findById(userId: string): Promise<User | null> {
     const uid = new mongodb.ObjectId(userId)
 
-    return db
+    const userDb = await db
       .getDb()
-      .collection('users')
+      .collection<User>('users')
       .findOne({ _id: uid }, { projection: { password: 0 } })
+
+    return userDb ? new User(userDb) : null;
   }
 
   getUserWithSameEmail() {
@@ -48,15 +47,20 @@ class User {
   async signup(): Promise<void> {
     const hashedPassword = await bcrypt.hash(this.password, 12)
 
-    await db.getDb().collection('users').insertOne({
-      email: this.email,
-      password: hashedPassword,
-      name: this.fullname,
-      address: this.address
-    })
+    try {
+
+      await db.getDb().collection('users').insertOne({
+        email: this.email,
+        password: hashedPassword,
+        name: this.fullname,
+        address: this.address
+      })
+    } catch (error: any) {
+      throw new Error("Signup failed, please try again!")
+    }
   }
 
-  hasMatchingPassword(hashedPassword: any) {
+  hasMatchingPassword(hashedPassword: string) {
     return bcrypt.compare(this.password, hashedPassword)
   }
 }

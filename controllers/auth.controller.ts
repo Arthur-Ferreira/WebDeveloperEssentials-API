@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express"
 
 import User from '../models/user.model'
-import * as authUtil from '../util/authentication'
+import authUtil from '../util/authentication'
 import validation from '../util/validation'
 import sessionFlash from '../util/session-flash'
 
@@ -29,9 +29,11 @@ async function signup(req: Request, res: Response, next: NextFunction): Promise<
     confirmEmail: req.body['confirm-email'],
     password: req.body.password,
     fullname: req.body.fullname,
-    street: req.body.street,
-    postal: req.body.postal,
-    city: req.body.city
+    address: {
+      street: req.body.street,
+      postal: req.body.postal,
+      city: req.body.city
+    }
   }
 
   if (
@@ -39,9 +41,7 @@ async function signup(req: Request, res: Response, next: NextFunction): Promise<
       req.body.email,
       req.body.password,
       req.body.fullname,
-      req.body.street,
-      req.body.postal,
-      req.body.city
+      req.body.address
     ) ||
     !validation.emailIsConfirmed(req.body.email, req.body['confirm-email'])
   ) {
@@ -63,9 +63,7 @@ async function signup(req: Request, res: Response, next: NextFunction): Promise<
     req.body.email,
     req.body.password,
     req.body.fullname,
-    req.body.street,
-    req.body.postal,
-    req.body.city
+    req.body.address,
   )
 
   try {
