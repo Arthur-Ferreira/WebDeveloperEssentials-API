@@ -6,20 +6,8 @@ class CustomError extends Error {
   code?: number;
 }
 
-
-interface IProduct {
-  title: string;
-  summary: string;
-  price: number;
-  description: string;
-  image?: string;
-  imagePath?: string;
-  imageUrl?: string;
-  _id?: ObjectId; // Optional _id
-}
-
 class Product {
-  public id?: ObjectId; // Optional id
+  public id?: string; // Optional id
   public title: string;
   public summary: string;
   public price: number;
@@ -34,10 +22,10 @@ class Product {
     this.summary = productData.summary;
     this.price = +productData.price;
     this.description = productData.description;
-    this.image = productData.image; // the name of the image file
+    this.image = productData.image;
     this.updateImageData();
     if (productData._id) {
-      this.id = productData._id;
+      this.id = productData._id.toString();
     }
   }
 

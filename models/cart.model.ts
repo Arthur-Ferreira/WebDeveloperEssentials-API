@@ -1,7 +1,5 @@
 import Product from './product.model'
 
-
-
 class Cart {
   items: ICart[];
   totalQuantity: number;

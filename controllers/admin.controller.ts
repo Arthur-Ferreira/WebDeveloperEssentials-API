@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express"
 
-import Product from '../models/product.models'
+import Product from '../models/product.model'
 import Order from '../models/order.model'
 
 async function getProducts(req: Request, res: Response, next: NextFunction): Promise<void> {
