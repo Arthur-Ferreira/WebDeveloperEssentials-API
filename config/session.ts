@@ -1,7 +1,9 @@
-import expressSession from 'express-session'
+import expressSession, { SessionOptions } from 'express-session'
 import mongoDbStore from 'connect-mongodb-session'
 
-function createSessionStore() {
+
+// Funtion to create a MongoDB Session Store
+function createSessionStore(): mongoDbStore.MongoDBStore {
   const MongoDBStore = mongoDbStore(expressSession)
 
   const store = new MongoDBStore({
@@ -13,9 +15,9 @@ function createSessionStore() {
   return store
 }
 
-function createSessionConfig() {
+function createSessionConfig(): SessionOptions {
   return {
-    secret: process.env.SECRET,
+    secret: process.env.SECRET as string,
     resave: false,
     saveUninitialized: false,
     store: createSessionStore(),
@@ -25,4 +27,4 @@ function createSessionConfig() {
   }
 }
 
-module.exports = createSessionConfig
+export default createSessionConfig

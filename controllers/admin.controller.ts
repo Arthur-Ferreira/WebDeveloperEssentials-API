@@ -13,24 +13,21 @@ async function getProducts(req: Request, res: Response, next: NextFunction): Pro
   }
 }
 
-function getNewProduct(req: Request, res: Response): void {
+function getNewProduct(res: Response): void {
   res.render('admin/products/new-product')
 }
 
 async function createNewProduct(req: Request, res: Response, next: NextFunction): Promise<void> {
   const product = new Product({
     ...req.body,
-    image: req.file.filename
+    image: req.file?.filename
   })
 
   try {
     await product.save()
   } catch (error) {
     next(error)
-    return
   }
-
-  res.redirect('/admin/products')
 }
 
 async function getUpdateProduct(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -56,7 +53,6 @@ async function updateProduct(req: Request, res: Response, next: NextFunction): P
     await product.save()
   } catch (error) {
     next(error)
-    return
   }
 
   res.redirect('/admin/products')
@@ -74,7 +70,7 @@ async function deleteProduct(req: Request, res: Response, next: NextFunction): P
   res.json({ message: 'Deleted product!' })
 }
 
-async function getOrders(req: Request, res: Response, next: NextFunction): Promise<void> {
+async function getOrders(res: Response, next: NextFunction): Promise<void> {
   try {
     const orders = await Order.findAll()
     res.render('admin/orders/admin-orders', {
@@ -92,11 +88,15 @@ async function updateOrder(req: Request, res: Response, next: NextFunction): Pro
   try {
     const order = await Order.findById(orderId)
 
-    order.status = newStatus
+    if (order) {
 
-    await order.save()
+      order.status = newStatus
+      await order.save()
+      res.json({ message: 'Order updated', newStatus: newStatus })
+    } else {
+      res.status(404).json({ message: 'Order not found!' });
+    }
 
-    res.json({ message: 'Order updated', newStatus: newStatus })
   } catch (error) {
     next(error)
   }
