@@ -1,4 +1,6 @@
-function checkAuthStatus(req, res, next) {
+import { Request, Response, NextFunction } from 'express'
+
+function checkAuthStatus(req: Request, res: Response, next: NextFunction): void {
   const uid = req.session.uid
 
   if (!uid) {
@@ -11,4 +13,4 @@ function checkAuthStatus(req, res, next) {
   next()
 }
 
-module.exports = checkAuthStatus
+export default checkAuthStatus

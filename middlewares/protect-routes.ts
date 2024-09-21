@@ -1,4 +1,6 @@
-function protectRoutes(req, res, next) {
+import { Request, Response, NextFunction } from 'express'
+
+function protectRoutes(req: Request, res: Response, next: NextFunction): void {
   if (!res.locals.isAuth) {
     return res.redirect('/401')
   }
@@ -10,4 +12,4 @@ function protectRoutes(req, res, next) {
   next()
 }
 
-module.exports = protectRoutes
+export default protectRoutes
