@@ -70,10 +70,10 @@ async function deleteProduct(req: Request, res: Response, next: NextFunction): P
   res.json({ message: 'Deleted product!' })
 }
 
-async function getOrders(res: Response, next: NextFunction): Promise<void> {
+async function getOrders(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const orders = await Order.findAll()
-    res.render('admin/orders/admin-orders', {
+    res.json({
       orders: orders
     })
   } catch (error) {

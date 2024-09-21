@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express"
 
 import User from '../models/user.model'
-import authUtil from '../util/authentication'
+import * as authUtil from '../util/authentication'
 import validation from '../util/validation'
 import sessionFlash from '../util/session-flash'
 

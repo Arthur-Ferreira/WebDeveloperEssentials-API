@@ -31,6 +31,7 @@ declare global {
     fullname: string
     address: IAddress
     id?: string
+    isAdmin?: boolean
   }
 
 

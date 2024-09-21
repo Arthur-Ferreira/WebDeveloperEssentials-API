@@ -1,7 +1,7 @@
-const bcrypt = require('bcryptjs')
-const mongodb = require('mongodb')
+import * as bcrypt from 'bcryptjs'
+import mongodb from 'mongodb'
 
-const db = require('../data/database')
+import * as db from '../data/database'
 
 class User {
   public id?: string;
@@ -24,7 +24,7 @@ class User {
     }
   }
 
-  static findById(userId: string): Promise<User> {
+  static async findById(userId: string): Promise<User> {
     const uid = new mongodb.ObjectId(userId)
 
     return db
