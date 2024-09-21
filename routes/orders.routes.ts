@@ -1,6 +1,6 @@
-const express = require('express')
+import express from 'express'
 
-const ordersController = require('../controllers/orders.controller')
+import * as ordersController from '../controllers/orders.controller'
 
 const router = express.Router()
 
@@ -12,4 +12,4 @@ router.get('/success', ordersController.getSuccess) // /orders
 
 router.get('/failure', ordersController.getFailure) // /orders
 
-module.exports = router
+export default router

@@ -1,7 +1,7 @@
-const express = require('express')
+import express from 'express'
 
-const adminController = require('../controllers/admin.controller')
-const imageUploadMiddleware = require('../middlewares/image-upload')
+import * as adminController from '../controllers/admin.controller'
+import imageUploadMiddleware from '../middlewares/image-upload'
 
 const router = express.Router()
 
@@ -29,4 +29,4 @@ router.get('/orders', adminController.getOrders)
 
 router.patch('/orders/:id', adminController.updateOrder)
 
-module.exports = router
+export default router

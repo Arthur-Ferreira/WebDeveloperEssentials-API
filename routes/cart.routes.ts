@@ -1,6 +1,6 @@
-const express = require('express')
+import express from 'express'
 
-const cartController = require('../controllers/cart.controller')
+import * as cartController from '../controllers/cart.controller'
 
 const router = express.Router()
 
@@ -10,4 +10,4 @@ router.post('/items', cartController.addCartItem) // /cart/items
 
 router.patch('/items', cartController.updateCartItem)
 
-module.exports = router
+export default router
