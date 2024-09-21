@@ -1,15 +1,11 @@
 import Product from './product.model'
 
-interface ICart {
-  product: Product;
-  quantity: Number;
-  totalPrice: Number;
-}
+
 
 class Cart {
   items: ICart[];
-  totalQuantity: Number;
-  totalPrice: Number;
+  totalQuantity: number;
+  totalPrice: number;
 
   constructor(items: ICart[] = [], totalQuantity = 0, totalPrice = 0) {
     this.items = items
@@ -18,18 +14,14 @@ class Cart {
   }
 
   async updatePrices(): Promise<void> {
-    const productIds = this.items.map(function (item) {
-      return item.product.id
-    })
+    const productIds = this.items.map((item) => item.product.id)
 
-    const products : Product[] = await Product.findMultiple(productIds)
+    const products = await Product.findMultiple(productIds)
 
-    const deletableCartItemProductIds = []
+    const deletableCartItemProductIds: string[] = []
 
     for (const cartItem of this.items) {
-      const product = products.find(function (prod) {
-        return prod.id === cartItem.product.id
-      })
+      const product = products.find((prod: IProduct) => prod._id === cartItem.product.id)
 
       if (!product) {
         // product was deleted!
@@ -50,18 +42,18 @@ class Cart {
       })
     }
 
-    // re-calculate cart totals
+    // recalculate cart totals
     this.totalQuantity = 0
     this.totalPrice = 0
 
     for (const item of this.items) {
-      this.totalQuantity = this.totalQuantity + item.quantity
-      this.totalPrice = this.totalPrice + item.totalPrice
+      this.totalQuantity += item.quantity
+      this.totalPrice += item.totalPrice
     }
   }
 
   addItem(product: Product): void {
-    const cartItem = {
+    const cartItem: ICart = {
       product: product,
       quantity: 1,
       totalPrice: product.price
@@ -70,8 +62,8 @@ class Cart {
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i]
       if (item.product.id === product.id) {
-        cartItem.quantity = +item.quantity + 1
-        cartItem.totalPrice = item.totalPrice + product.price
+        cartItem.quantity = item.quantity + 1
+        cartItem.totalPrice += product.price
         this.items[i] = cartItem
 
         this.totalQuantity++
@@ -85,23 +77,29 @@ class Cart {
     this.totalPrice += product.price
   }
 
-  updateItem(productId, newQuantity) {
+  updateItem(productId: string, newQuantity: number): { updatedItemPrice: number } | void  {
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i]
       if (item.product.id === productId && newQuantity > 0) {
         const cartItem = { ...item }
         const quantityChange = newQuantity - item.quantity
+
         cartItem.quantity = newQuantity
         cartItem.totalPrice = newQuantity * item.product.price
+        
         this.items[i] = cartItem
 
         this.totalQuantity = this.totalQuantity + quantityChange
         this.totalPrice += quantityChange * item.product.price
+      
         return { updatedItemPrice: cartItem.totalPrice }
+      
       } else if (item.product.id === productId && newQuantity <= 0) {
+      
         this.items.splice(i, 1)
-        this.totalQuantity = this.totalQuantity - item.quantity
+        this.totalQuantity -= item.quantity
         this.totalPrice -= item.totalPrice
+      
         return { updatedItemPrice: 0 }
       }
     }
