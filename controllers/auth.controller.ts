@@ -59,12 +59,14 @@ async function signup(req: Request, res: Response, next: NextFunction): Promise<
     return
   }
 
-  const user = new User(
-    req.body.email,
-    req.body.password,
-    req.body.fullname,
-    req.body.address,
-  )
+  const user = new User({
+    email: req.body.email,
+    password: req.body.password,
+    fullname: req.body.fullname,
+    street: req.body.street,
+    postal: req.body.postal,
+    city: req.body.city
+  })
 
   try {
     const existsAlready = await user.existsAlready()
@@ -106,7 +108,7 @@ function getLogin(req: Request, res: Response): void {
 }
 
 async function login(req: Request, res: Response, next: NextFunction): Promise<void> {
-  const user = new User(req.body.email, req.body.password)
+  const user = new User({ email: req.body.email, password: req.body.password })
   let existingUser
   try {
     existingUser = await user.getUserWithSameEmail()

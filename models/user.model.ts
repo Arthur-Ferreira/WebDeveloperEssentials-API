@@ -6,15 +6,17 @@ class User {
   public id?: string;
   public email: string;
   public password: string;
-  public fullname: string;
-  public address: IAddress;
+  public fullname?: string;
+  public address?: IAddress
 
   constructor(userData: IUser) {
     this.email = userData.email
     this.password = userData.password
     this.fullname = userData.fullname
     this.address = {
-      ...userData.address
+      street: userData.address?.street || '',
+      postal: userData.address?.postal || '',
+      city: userData.address?.city || '',
     }
     if (userData.id) {
       this.id = userData.id.toString();

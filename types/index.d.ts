@@ -20,18 +20,21 @@ declare global {
   }
 
   interface IAddress {
-    street: string
-    postal: string
-    city:string
+    street: string;
+    postal: string;
+    city: string;
   }
 
   interface IUser {
-    email: string
-    password: string
-    fullname: string
-    address: IAddress
-    id?: string
-    isAdmin?: boolean
+    email: string;
+    password: string;
+    fullname?: string;
+    street?: string;
+    postal?: string;
+    city?: string;
+    address?: IAddress;
+    id?: string;
+    isAdmin?: boolean;
   }
 
 

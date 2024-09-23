@@ -13,9 +13,7 @@ class Cart {
 
   async updatePrices(): Promise<void> {
     const productIds = this.items.map((item) => item.product.id)
-
     const products = await Product.findMultiple(productIds)
-
     const deletableCartItemProductIds: string[] = []
 
     for (const cartItem of this.items) {
@@ -75,7 +73,7 @@ class Cart {
     this.totalPrice += product.price
   }
 
-  updateItem(productId: string, newQuantity: number): { updatedItemPrice: number } | void  {
+  updateItem(productId: string, newQuantity: number): { updatedItemPrice: number } | void {
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i]
       if (item.product.id === productId && newQuantity > 0) {
@@ -84,20 +82,20 @@ class Cart {
 
         cartItem.quantity = newQuantity
         cartItem.totalPrice = newQuantity * item.product.price
-        
+
         this.items[i] = cartItem
 
         this.totalQuantity = this.totalQuantity + quantityChange
         this.totalPrice += quantityChange * item.product.price
-      
+
         return { updatedItemPrice: cartItem.totalPrice }
-      
+
       } else if (item.product.id === productId && newQuantity <= 0) {
-      
+
         this.items.splice(i, 1)
         this.totalQuantity -= item.quantity
         this.totalPrice -= item.totalPrice
-      
+
         return { updatedItemPrice: 0 }
       }
     }

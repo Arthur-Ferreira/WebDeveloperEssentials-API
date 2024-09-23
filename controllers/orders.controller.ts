@@ -5,7 +5,11 @@ import stripe from 'stripe'
 import Order from '../models/order.model'
 import User from '../models/user.model'
 
-const stripeInstance = new stripe(process.env.STRIPE_KEY)
+const stripeKey = process.env.STRIPE_KEY;
+if (!stripeKey) {
+  throw new Error('STRIPE_KEY is missing');
+}
+const stripeInstance = new stripe(stripeKey);
 
 async function getOrders(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
@@ -37,10 +41,10 @@ async function addOrder(req: Request, res: Response, next: NextFunction): Promis
     return
   }
 
-  req.session.cart = null
+  req.session.cart = undefined
 
   const session = await stripeInstance.checkout.sessions.create({
-    line_items: cart.items.map((item) => {
+    line_items: cart.items.map((item: ICart) => {
       return {
         price_data: {
           currency: 'usd',
@@ -57,7 +61,7 @@ async function addOrder(req: Request, res: Response, next: NextFunction): Promis
     cancel_url: 'http://localhost:3000/orders/cancel'
   })
 
-  res.redirect(303, session.url)
+  // res.redirect(303, session.url)
 }
 
 function getSuccess(req: Request, res: Response): void {
