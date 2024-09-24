@@ -12,14 +12,14 @@ class Order {
   id?: string;
 
   constructor(
-    cart: ICart,
+    productData: ICart,
     userData: IUser,
     status: 'pending' | 'fulfilled' | 'cancelled' = 'pending',
     date: string | Date,
     orderId?: string
   ) {
 
-    this.productData = cart
+    this.productData = productData
     this.userData = userData
     this.status = status
     this.date = date ? new Date(date) : new Date()
@@ -36,7 +36,7 @@ class Order {
     this.id = orderId
   }
 
-  static transformOrderDocument(orderDoc: any): Order {
+  static transformOrderDocument(orderDoc: any) {
     return new Order(
       orderDoc.productData,
       orderDoc.userData,
@@ -46,11 +46,11 @@ class Order {
     )
   }
 
-  static transformOrderDocuments(orderDocs: any[]): Order[] {
+  static transformOrderDocuments(orderDocs: any[]) {
     return orderDocs.map(this.transformOrderDocument)
   }
 
-  static async findAll(): Promise<Order[]> {
+  static async findAll() {
     const orders = await db
       .getDb()
       .collection('orders')
@@ -61,7 +61,7 @@ class Order {
     return this.transformOrderDocuments(orders)
   }
 
-  static async findAllForUser(userId: string): Promise<Order[]> {
+  static async findAllForUser(userId: string) {
     const uid = new mongodb.ObjectId(userId)
 
     const orders = await db
