@@ -1,4 +1,4 @@
-import { ObjectId, DeleteResult } from 'mongodb'
+import { ObjectId } from 'mongodb'
 
 import * as db from '../data/database'
 
@@ -7,7 +7,6 @@ class CustomError extends Error {
 }
 
 class Product {
-  public id?: string; // Optional id
   public title: string;
   public summary: string;
   public price: number;
@@ -15,6 +14,7 @@ class Product {
   public image?;
   public imagePath?: string;
   public imageUrl?: string;
+  public id?: string; // Optional id
 
 
   constructor(productData: IProduct) {
@@ -29,7 +29,7 @@ class Product {
     }
   }
 
-  static async findById(productId: string): Promise<Product> {
+  static async findById(productId: string) {
     let prodId: ObjectId;
     try {
       prodId = new ObjectId(productId);
@@ -52,7 +52,7 @@ class Product {
     return new Product(product)
   }
 
-  static async findAll(): Promise<Product[]> {
+  static async findAll() {
     const products = await db
       .getDb()
       .collection('products')
@@ -63,7 +63,7 @@ class Product {
   }
 
 
-  static async findMultiple(ids: string[]): Promise<Product[]> {
+  static async findMultiple(ids: string[]) {
     const productIds = ids.map(id => new ObjectId(id))
 
     const products = await db
@@ -72,16 +72,16 @@ class Product {
       .find({ _id: { $in: productIds } })
       .toArray()
 
-    return products.map((productDocument: IProduct) => new Product(productDocument))
+    return products.map(productDocument => new Product(productDocument))
   }
 
-  updateImageData(): void {
+  updateImageData() {
     this.imagePath = `product-data/images/${this.image}`
     this.imageUrl = `/products/assets/images/${this.image}`
   }
 
-  async save(): Promise<void> {
-    const productData: IProduct = {
+  async save() {
+    const productData = {
       title: this.title,
       summary: this.summary,
       price: this.price,
@@ -113,12 +113,12 @@ class Product {
     }
   }
 
-  replaceImage(newImage: string): void {
+  replaceImage(newImage: string) {
     this.image = newImage
     this.updateImageData()
   }
 
-  remove(): Promise<DeleteResult> {
+  remove() {
     const productId = new ObjectId(this.id!)
     return db.getDb().collection('products').deleteOne({ _id: productId })
   }
