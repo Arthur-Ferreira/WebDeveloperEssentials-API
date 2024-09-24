@@ -3,43 +3,38 @@ import mongodb from 'mongodb'
 import * as db from '../data/database'
 
 class User {
-  public id?: string;
-  public email: string;
-  public password: string;
-  public fullname?: string;
-  public address?: IAddress
+  email: string;
+  password: string;
+  fullname?: string;
+  address?: IAddress
 
-  constructor(userData: IUser) {
-    this.email = userData.email
-    this.password = userData.password
-    this.fullname = userData.fullname
+  constructor(email: string, password: string, fullname: string, street: string, postal: string, city: string) {
+    this.email = email
+    this.password = password
+    this.fullname = fullname
     this.address = {
-      street: userData.address?.street || '',
-      postal: userData.address?.postal || '',
-      city: userData.address?.city || '',
-    }
-    if (userData.id) {
-      this.id = userData.id.toString();
+      street: street,
+      postal: postal,
+      city: city,
     }
   }
 
   static async findById(userId: string): Promise<User | null> {
     const uid = new mongodb.ObjectId(userId)
 
-    const userDb = await db
+    return db
       .getDb()
       .collection<User>('users')
       .findOne({ _id: uid }, { projection: { password: 0 } })
 
-    return userDb ? new User(userDb) : null;
   }
 
-  getUserWithSameEmail() {
-    return db.getDb().collection('users').findOne({ email: this.email })
+  getUserWithSameEmail(email: string) {
+    return db.getDb().collection('users').findOne({ email: email })
   }
 
   async existsAlready(): Promise<boolean> {
-    const existingUser = await this.getUserWithSameEmail()
+    const existingUser = await this.getUserWithSameEmail(this.email)
     if (existingUser) {
       return true
     }
@@ -62,7 +57,7 @@ class User {
     }
   }
 
-  hasMatchingPassword(hashedPassword: string) {
+  hasMatchingPassword(hashedPassword: string): Promise<boolean> {
     return bcrypt.compare(this.password, hashedPassword)
   }
 }
