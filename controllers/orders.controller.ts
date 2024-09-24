@@ -14,15 +14,14 @@ const stripeInstance = new stripe(stripeKey);
 async function getOrders(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const orders = await Order.findAllForUser(res.locals.uid)
-    res.render('customer/orders/all-orders', {
-      orders: orders
-    })
+    // res.render('customer/orders/all-orders', { orders: orders })
+    res.json({ orders: orders })
   } catch (error) {
     next(error)
   }
 }
 
-async function addOrder(req: Request, res: Response, next: NextFunction): Promise<void> {
+async function addOrder(req: Request, res: Response, next: NextFunction) {
   const cart = res.locals.cart
 
   let userDocument
@@ -32,7 +31,9 @@ async function addOrder(req: Request, res: Response, next: NextFunction): Promis
     return next(error)
   }
 
-  const order = new Order(cart, userDocument)
+  if(!userDocument) return null
+
+  const order = new Order(cart, userDocument, 'pending', new Date())
 
   try {
     await order.save()
