@@ -40,12 +40,12 @@ async function addCartItem(req: Request, res: Response, next: NextFunction): Pro
 }
 
 function updateCartItem(req: Request, res: Response): void {
-  // const cart = res.locals.cart
+  const cart = res.locals.cart
   const { productId, quantity } = req.body
 
   const updatedItemData = cart.updateItem(productId, quantity)
 
-  // req.session.cart = cart
+  req.session.cart = cart
 
   res.status(200).json({
     message: 'Item updated!',
