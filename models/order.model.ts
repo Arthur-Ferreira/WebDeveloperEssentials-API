@@ -15,7 +15,7 @@ class Order {
     productData: ICart,
     userData: IUser,
     status: 'pending' | 'fulfilled' | 'cancelled' = 'pending',
-    date: string | Date,
+    date: string | Date = new Date(),
     orderId?: string
   ) {
 
@@ -33,7 +33,6 @@ class Order {
         year: 'numeric'
       })
     }
-    this.id = orderId
   }
 
   static transformOrderDocument(orderDoc: any) {
