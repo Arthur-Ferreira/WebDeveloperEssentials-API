@@ -8,6 +8,7 @@ RUN curl -fsS https://dotenvx.sh/ | sh
 COPY package*.json ./
 RUN npm install
 COPY . .
+RUN npx tsc
 EXPOSE 3000
 
 # CMD ["dotenvx", "run",  "--env-file=.env", "--", "node", "app.js"]

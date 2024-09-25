@@ -6,7 +6,8 @@ import Order from '../models/order.model'
 async function getProducts(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const products = await Product.findAll()
-    res.render('admin/products/all-products', { products: products })
+    // res.render('admin/products/all-products', { products: products })
+    res.status(200).json({ products: products })
   } catch (error) {
     next(error)
     return
@@ -14,7 +15,8 @@ async function getProducts(req: Request, res: Response, next: NextFunction): Pro
 }
 
 function getNewProduct(res: Response): void {
-  res.render('admin/products/new-product')
+  // res.render('admin/products/new-product')
+  res.status(201).json({ message: "Add new product" })
 }
 
 async function createNewProduct(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -25,6 +27,7 @@ async function createNewProduct(req: Request, res: Response, next: NextFunction)
 
   try {
     await product.save()
+    res.status(201).json({ message: "Product successfuly created" })
   } catch (error) {
     next(error)
   }
@@ -33,7 +36,8 @@ async function createNewProduct(req: Request, res: Response, next: NextFunction)
 async function getUpdateProduct(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const product = await Product.findById(req.params.id)
-    res.render('admin/products/update-product', { product: product })
+    // res.render('admin/products/update-product', { product: product })
+    res.status(200).json({ product: product })
   } catch (error) {
     next(error)
   }
@@ -51,11 +55,12 @@ async function updateProduct(req: Request, res: Response, next: NextFunction): P
 
   try {
     await product.save()
+    res.status(201).json({ message: "Product successfuly updated" })
   } catch (error) {
     next(error)
   }
 
-  res.redirect('/admin/products')
+  // res.redirect('/admin/products')
 }
 
 async function deleteProduct(req: Request, res: Response, next: NextFunction): Promise<void> {

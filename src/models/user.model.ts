@@ -8,15 +8,11 @@ class User {
   fullname?: string;
   address?: IAddress
 
-  constructor(email: string, password: string, fullname: string, street: string, postal: string, city: string) {
+  constructor(email: string, password: string, fullname?: string, street?: string, postal?: string, city?: string) {
     this.email = email
     this.password = password
     this.fullname = fullname
-    this.address = {
-      street: street,
-      postal: postal,
-      city: city,
-    }
+    this.address = this.address
   }
 
   static async findById(userId: string): Promise<User | null> {
@@ -29,12 +25,17 @@ class User {
 
   }
 
-  getUserWithSameEmail(email: string) {
-    return db.getDb().collection('users').findOne({ email: email })
+  async getUserWithSameEmail(): Promise<IUser | null> {
+    const user = await db
+      .getDb()
+      .collection('users')
+      .findOne({ email: this.email }) as IUser | null; // Casting para IUser
+
+    return user; // Retorna já tipado como IUser
   }
 
   async existsAlready(): Promise<boolean> {
-    const existingUser = await this.getUserWithSameEmail(this.email)
+    const existingUser = await this.getUserWithSameEmail()
     if (existingUser) {
       return true
     }
@@ -57,7 +58,7 @@ class User {
     }
   }
 
-  hasMatchingPassword(hashedPassword: string): Promise<boolean> {
+  async hasMatchingPassword(hashedPassword: string): Promise<boolean> {
     return bcrypt.compare(this.password, hashedPassword)
   }
 }
