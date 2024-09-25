@@ -2,7 +2,7 @@
   Web Developer Essentials
 </h1>
 
-<img style="width: 100%;" src="public/assets/layout.png" alt="WDE Layout"/>
+<img style="width: 100%;" src="src/.github/layout.png" alt="WDE Layout"/>
 
 <nav>
   <ul style="list-style:none;display:flex;justify-content:center;gap:40px;">
