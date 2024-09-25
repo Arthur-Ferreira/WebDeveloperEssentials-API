@@ -1,45 +1,36 @@
 <h1 align="center">
-  Web Developer Essentials
+  Web Developer Essentials - API
 </h1>
-
-<img style="width: 100%;" src="public/assets/layout.png" alt="WDE Layout"/>
-
-<nav>
-  <ul style="list-style:none;display:flex;justify-content:center;gap:40px;">
-    <li>
-      <a href="#projeto">Projeto</a>
-    </li>
-    <li>
-      <a href="#tecnologias">Tecnologias</a>
-    </li>
-  </ul>
-</nav>
 
 ## 💻 Projeto
 
-O projeto desenvolvido é uma loja completa, seguindo o padrão arquitetural MVC (Model, Views, Controller). Nela, é possível explorar, visualizar todas as ofertas, criar novas, editar e excluí-las. 
+Este projeto foi desenvolvido como uma loja completa e inicialmente seguia o padrão arquitetural MVC (Model, View, Controller). Agora, evoluiu para uma **API RESTful**, com essa transição, todas as operações que antes dependiam de uma aplicação server-side com renderização de views, agora são gerenciadas por endpoints REST, proporcionando maior flexibilidade e escalabilidade para integrações com diferentes front-ends.
 
-Além disso, oferece funcionalidades como a criação de uma nova conta, acesso às informações da conta, adição de produtos ao carrinho e conclusão da compra. Para simular transações, integramos o Stripe, aproveitando a variedade de métodos de pagamento previamente cadastrados na plataforma.
+O sistema continua a oferecer funcionalidades como explorar e visualizar produtos, criar novas ofertas, editar e excluí-las. As operações de conta também estão presentes, permitindo a criação de novas contas, acesso a informações do usuário, adição de produtos ao carrinho e conclusão de compras. A integração com o **Stripe** para simulação de transações foi mantida, aproveitando os métodos de pagamento da plataforma.
 
-O sistema abrange todas as operações de um CRUD completo (Create, Read, Update, Delete) e vai além, proporcionando uma experiência abrangente e envolvente.
-Funcionalidades:
+O sistema abrange todas as operações de um CRUD completo (Create, Read, Update, Delete) e vai além, proporcionando uma experiência abrangente para o usuário.
 
-- Autenticação;
-- Autorização;
-- Consumo de API;
+### 🛠 Funcionalidades:
 
-Novas técnologias e funcionalidade:
+- Autenticação e autorização;
+- Operações de CRUD para produtos, contas e pedidos;
+- Integração com o Stripe para processamento de pagamentos;
+- Adição de produtos ao carrinho e conclusão de compras.
 
-- 11/23 - Introdução do arquivo .env, um gerenciador de informações sensíveis para desenvolvedores;
-- 11/23 - Introdução do pré-processador Less, para melhor escrita do CSS.
+### 💡 Novas tecnologias e funcionalidades:
+
+- **11/23** - Introdução do uso de `.env` para gerenciamento seguro de variáveis de ambiente sensíveis;
+
+- **09/24** - Introdução do uso de `Typescript` para tipagem de dados e mitigação de erros;
+
 
 ## 🚀 Tecnologias
 
-Esse projeto foi desenvolvido com as seguintes tecnologias:
+Este projeto foi desenvolvido com as seguintes tecnologias:
 
 - [Node.js](https://nodejs.org/en/)
 - [Express](https://expressjs.com/pt-br/)
 - [MongoDB](https://www.mongodb.com/)
-- [EJS](https://ejs.co/)
 - [.ENV](https://www.dotenv.org/)
-- [Less](https://lesscss.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Stripe](https://stripe.com/)
