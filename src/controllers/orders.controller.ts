@@ -4,6 +4,7 @@ import stripe from 'stripe'
 
 import Order from '../models/order.model'
 import User from '../models/user.model'
+import { ICart } from "../types";
 
 const stripeKey = process.env.STRIPE_KEY;
 if (!stripeKey) {

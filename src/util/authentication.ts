@@ -1,5 +1,6 @@
 import { Request } from "express"
 import 'express-session';
+import { IUser } from "../types";
 
 declare module 'express-session' {
   interface Session {

@@ -1,6 +1,7 @@
 import * as bcrypt from 'bcryptjs'
 import mongodb from 'mongodb'
 import * as db from '../data/database'
+import { IAddress, IUser } from '../types';
 
 class User {
   email: string;
