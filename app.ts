@@ -7,7 +7,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-import createSessionConfig from './src/config/session'
+import createSessionConfig from './src/util/session'
 import * as db from './src/data/database'
 import addCsrfTokenMiddleware from './src/middlewares/csrf-token'
 import errorHandlerMiddleware from './src/middlewares/error-handler'
@@ -35,10 +35,11 @@ app.use('/products/assets', express.static('product-data'))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
-const sessionConfig = createSessionConfig()
 
-app.use(expressSession(sessionConfig))
-app.use(csrf())
+// const sessionConfig = createSessionConfig()
+
+// app.use(expressSession(sessionConfig))
+// app.use(csrf())
 
 app.use(cartMiddleware)
 app.use(updateCartPricesMiddleware)

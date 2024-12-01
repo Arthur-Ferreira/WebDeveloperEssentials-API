@@ -1,6 +1,7 @@
 import { ObjectId } from 'mongodb'
 
 import * as db from '../data/database'
+import { IProduct } from '../types';
 
 class CustomError extends Error {
   code?: number;
