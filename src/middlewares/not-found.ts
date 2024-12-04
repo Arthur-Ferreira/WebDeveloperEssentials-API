@@ -1,7 +1,9 @@
 import { Request, Response } from 'express'
 
 function notFoundHandler(req: Request, res: Response): void {
-  res.render('shared/404')
+  res.status(404).json({
+    message: 'Invalid input.'
+  });
 }
 
 export default notFoundHandler
