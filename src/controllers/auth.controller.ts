@@ -15,6 +15,7 @@ interface SessionData {
   city: string
 }
 
+// GET SIGNUP
 function getSignup(req: Request, res: Response) {
   let sessionData: SessionData = sessionFlash.getSessionData(req)
 
@@ -34,6 +35,7 @@ function getSignup(req: Request, res: Response) {
   res.status(200).json({ inputData: sessionData })
 }
 
+// POST SIGNUP
 async function signup(req: Request, res: Response, next: NextFunction): Promise<void> {
   const enteredData: SessionData = {
     email: req.body.email,
@@ -45,6 +47,7 @@ async function signup(req: Request, res: Response, next: NextFunction): Promise<
     city: req.body.city
   }
 
+  // console.log(enteredData)
 
   if (
     !validation.userDetailsAreValid(
@@ -105,20 +108,22 @@ async function signup(req: Request, res: Response, next: NextFunction): Promise<
   }
 }
 
+//GET LOGIN
 function getLogin(req: Request, res: Response): void {
   let sessionData = sessionFlash.getSessionData(req)
 
-  if (!sessionData) {
+  // if (!sessionData) {
     sessionData = {
       email: '',
       password: ''
-    }
+    // }
   }
 
   // res.render('customer/auth/login', { inputData: sessionData })
   res.status(200).json({ inputData: sessionData });
 }
 
+// POST LOGIN
 async function login(req: Request, res: Response, next: NextFunction): Promise<void> {
   const user = new User(req.body.email, req.body.password);
 
@@ -145,7 +150,7 @@ async function login(req: Request, res: Response, next: NextFunction): Promise<v
         password: user.password,
       });
 
-      res.status(401).json({ message: 'Invalid credentials' });
+      res.status(401).json({ message: 'Password Incorrect - please double-check your password!' });
       return;
     }
 
