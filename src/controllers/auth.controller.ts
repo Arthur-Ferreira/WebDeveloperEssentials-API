@@ -5,14 +5,7 @@ import authUtil from '../util/authentication'
 import validation from '../util/validation'
 import sessionFlash from '../util/session-flash'
 
-interface SessionData {
-  email: string,
-  confirmEmail: string,
-  password: string,
-  fullname: string,
-  street: string,
-  postal: string,
-  city: string
+interface SessionData extends IUser {
 }
 
 // GET SIGNUP
@@ -25,9 +18,11 @@ function getSignup(req: Request, res: Response) {
       confirmEmail: '',
       password: '',
       fullname: '',
-      street: '',
-      postal: '',
-      city: ''
+      address: {
+        street: '',
+        postalCode: '',
+        city: ''
+      }
     }
   }
 
@@ -42,9 +37,11 @@ async function signup(req: Request, res: Response, next: NextFunction): Promise<
     confirmEmail: req.body['confirm-email'],
     password: req.body.password,
     fullname: req.body.fullname,
-    street: req.body.street,
-    postal: req.body.postal,
-    city: req.body.city
+    address: {
+      street: req.body.street,
+      postalCode: req.body.postal,
+      city: req.body.city
+    }
   }
 
   // console.log(enteredData)
@@ -113,9 +110,9 @@ function getLogin(req: Request, res: Response): void {
   let sessionData = sessionFlash.getSessionData(req)
 
   // if (!sessionData) {
-    sessionData = {
-      email: '',
-      password: ''
+  sessionData = {
+    email: '',
+    password: ''
     // }
   }
 
