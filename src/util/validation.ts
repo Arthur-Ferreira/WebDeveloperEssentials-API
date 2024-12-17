@@ -12,7 +12,7 @@ function userDetailsAreValid(
   name: string,
   address: {
     street: string,
-    postal: string,
+    postalCode: string,
     city: string
   }
 ): boolean {
@@ -20,7 +20,7 @@ function userDetailsAreValid(
     userCredentialsAreValid(email, password) &&
     !isEmpty(name) &&
     !isEmpty(address.street) &&
-    !isEmpty(address.postal) &&
+    !isEmpty(address.postalCode) &&
     !isEmpty(address.city)
   )
 }
