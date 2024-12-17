@@ -1,19 +1,20 @@
 import * as bcrypt from 'bcryptjs'
 import mongodb from 'mongodb'
 import * as db from '../data/database'
-import { IAddress, IUser } from '../types';
 
 class User {
   email: string;
+  confirmEmail?: string;
   password: string;
   fullname?: string;
   address?: IAddress
 
-  constructor(email: string, password: string, fullname?: string, street?: string, postal?: string, city?: string) {
+  constructor(email: string, password: string, confirmEmail?: string, fullname?: string, address?: IAddress) {
     this.email = email
+    this.confirmEmail = confirmEmail
     this.password = password
     this.fullname = fullname
-    this.address = this.address
+    this.address = address
   }
 
   static async findById(userId: string): Promise<User | null> {

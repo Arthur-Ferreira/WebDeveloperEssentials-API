@@ -1,4 +1,4 @@
-import { ICart, IProduct } from '../types';
+
 import Product from './product.model'
 
 class Cart {
@@ -22,7 +22,7 @@ class Cart {
 
     for (const cartItem of this.items) {
 
-      const product = products.find((prod: IProduct) => prod._id?.toString() === cartItem.product._id?.toString());
+      const product = products.find((prod) => prod.id?.toString() === cartItem.product._id?.toString());
 
 
       if (!product) {

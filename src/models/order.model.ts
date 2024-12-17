@@ -1,6 +1,5 @@
 import mongodb from 'mongodb'
 import * as db from '../data/database'
-import { ICart, IUser } from '../types';
 
 
 class Order {

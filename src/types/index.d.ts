@@ -9,9 +9,9 @@ declare global {
     summary: string;
     price: number;
     description: string;
-    image: string;
-    imagePath: string;
-    imageUrl: string;
+    image?: string;
+    imagePath?: string;
+    imageUrl?: string;
     _id?: ObjectId | { $oid: string }
   }
 
@@ -50,6 +50,12 @@ declare global {
     email: string
     name: string
     address: IAddress
+  }
+
+  interface ICart {
+    product: IProduct;
+    quantity: number;
+    totalPrice: number;
   }
 
   interface ItemsProducts {
