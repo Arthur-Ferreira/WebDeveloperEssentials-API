@@ -1,20 +1,29 @@
 import * as bcrypt from 'bcryptjs'
-import mongodb from 'mongodb'
+import mongodb, { ObjectId } from 'mongodb'
 import * as db from '../data/database'
+import IUser from '../types'
 
 class User {
   email: string;
   confirmEmail?: string;
   password: string;
   fullname?: string;
-  address?: IAddress
+  street?: string
+  postalCode?: string
+  city?: string
+  _id?: ObjectId | { $oid: string }
+  isAdmin?: boolean
 
-  constructor(email: string, password: string, confirmEmail?: string, fullname?: string, address?: IAddress) {
+  constructor(email: string, password: string, confirmEmail?: string, fullname?: string, street?: string, postalCode?: string, city?: string, _id?: ObjectId | { $oid: string }, isAdmin?: boolean) {
     this.email = email
     this.confirmEmail = confirmEmail
     this.password = password
     this.fullname = fullname
-    this.address = address
+    this.street = street
+    this.postalCode = postalCode
+    this.city = city
+    this._id = _id
+    this.isAdmin = isAdmin
   }
 
   static async findById(userId: string): Promise<User | null> {
@@ -27,11 +36,11 @@ class User {
 
   }
 
-  async getUserWithSameEmail(): Promise<IUser | null> {
+  async getUserWithSameEmail() {
     const user = await db
       .getDb()
       .collection('users')
-      .findOne({ email: this.email }) as IUser | null; // Casting para IUser
+      .findOne({ email: this.email }) as User// Casting para IUser
 
     return user; // Retorna já tipado como IUser
   }
@@ -53,7 +62,9 @@ class User {
         email: this.email,
         password: hashedPassword,
         name: this.fullname,
-        address: this.address
+        street: this.street,
+        postalCode: this.postalCode,
+        city: this.city
       })
     } catch (error: any) {
       throw new Error("Signup failed, please try again!")

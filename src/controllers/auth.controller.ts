@@ -5,12 +5,12 @@ import authUtil from '../util/authentication'
 import validation from '../util/validation'
 import sessionFlash from '../util/session-flash'
 
-interface SessionData extends IUser {
+interface ISessionData {
 }
 
 // GET SIGNUP
 function getSignup(req: Request, res: Response) {
-  let sessionData: SessionData = sessionFlash.getSessionData(req)
+  let sessionData: ISessionData = sessionFlash.getSessionData(req)
 
   if (!sessionData) {
     sessionData = {
@@ -32,7 +32,7 @@ function getSignup(req: Request, res: Response) {
 
 // POST SIGNUP
 async function signup(req: Request, res: Response, next: NextFunction): Promise<void> {
-  const enteredData: SessionData = {
+  const enteredData: ISessionData = {
     email: req.body.email,
     confirmEmail: req.body['confirm-email'],
     password: req.body.password,

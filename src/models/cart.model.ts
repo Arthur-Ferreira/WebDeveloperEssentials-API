@@ -82,7 +82,7 @@ class Cart {
   updateItem(productId: string, newQuantity: number): { updatedItemPrice: number } | void {
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i]
-      if (item.product._id === productId && newQuantity > 0) {
+      if (item.product._id?.toString() === productId && newQuantity > 0) {
         const cartItem = { ...item }
         const quantityChange = newQuantity - item.quantity
 
@@ -96,7 +96,7 @@ class Cart {
 
         return { updatedItemPrice: cartItem.totalPrice }
 
-      } else if (item.product._id === productId && newQuantity <= 0) {
+      } else if (item.product._id?.toString() === productId && newQuantity <= 0) {
 
         this.items.splice(i, 1)
         this.totalQuantity -= item.quantity
