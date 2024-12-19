@@ -4,8 +4,9 @@ import User from '../models/user.model'
 import authUtil from '../util/authentication'
 import validation from '../util/validation'
 import sessionFlash from '../util/session-flash'
+import IUser from '../types'
 
-interface ISessionData {
+interface ISessionData extends IUser {
 }
 
 // GET SIGNUP
@@ -44,14 +45,19 @@ async function signup(req: Request, res: Response, next: NextFunction): Promise<
     }
   }
 
-  // console.log(enteredData)
-
   if (
     !validation.userDetailsAreValid(
+      // enteredData.email,
+      // enteredData.password,
+      // enteredData.fullname,
+      // enteredData.address
       req.body.email,
       req.body.password,
       req.body.fullname,
-      req.body.address,
+      // req.body.address,
+      req.body.street,
+      req.body.postal,
+      req.body.city
     ) ||
     !validation.emailIsConfirmed(req.body.email, req.body['confirm-email'])
   ) {
@@ -74,10 +80,13 @@ async function signup(req: Request, res: Response, next: NextFunction): Promise<
     req.body.email,
     req.body.password,
     req.body.fullname,
-    req.body.address,
-    // req.body.postal,
-    // req.body.city
+    req.body.street,
+    req.body.postal,
+    req.body.city
   )
+
+  console.log("User Auth")
+  console.log(user)
 
   try {
     const existsAlready = await user.existsAlready()

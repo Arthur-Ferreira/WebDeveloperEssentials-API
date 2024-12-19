@@ -9,19 +9,31 @@ function userCredentialsAreValid(email: string, password: string): boolean {
 function userDetailsAreValid(
   email: string,
   password: string,
-  name: string,
-  address: {
+  fullname: string,
+  // address: {
     street: string,
     postalCode: string,
     city: string
-  }
+  // }
 ): boolean {
+  console.log("User Details")
+  console.log(email)
+  console.log(password)
+  console.log(fullname)
+  // console.log(address)
+  console.log(street)
+  console.log(postalCode)
+  console.log(city)
+
   return (
     userCredentialsAreValid(email, password) &&
-    !isEmpty(name) &&
-    !isEmpty(address.street) &&
-    !isEmpty(address.postalCode) &&
-    !isEmpty(address.city)
+    !isEmpty(fullname) &&
+    // !isEmpty(address.street) &&
+    // !isEmpty(address.postalCode) &&
+    // !isEmpty(address.city)
+    !isEmpty(street) &&
+    !isEmpty(postalCode) &&
+    !isEmpty(city)
   )
 }
 
