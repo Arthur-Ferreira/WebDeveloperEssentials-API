@@ -25,7 +25,7 @@ function getSignup(req: Request, res: Response) {
   res.status(200).json({ inputData: sessionData })
 }
 
-// POST SIGNU
+// POST SIGNUP
 async function signup(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     // Validate required fields
