@@ -1,3 +1,5 @@
+import IAddress from '../types';
+
 function isEmpty(value: string | null | undefined): boolean {
   return !value || value.trim() === ''
 }
@@ -10,30 +12,14 @@ function userDetailsAreValid(
   email: string,
   password: string,
   fullname: string,
-  // address: {
-    street: string,
-    postalCode: string,
-    city: string
-  // }
+  address: IAddress
 ): boolean {
-  console.log("User Details")
-  console.log(email)
-  console.log(password)
-  console.log(fullname)
-  // console.log(address)
-  console.log(street)
-  console.log(postalCode)
-  console.log(city)
-
   return (
     userCredentialsAreValid(email, password) &&
     !isEmpty(fullname) &&
-    // !isEmpty(address.street) &&
-    // !isEmpty(address.postalCode) &&
-    // !isEmpty(address.city)
-    !isEmpty(street) &&
-    !isEmpty(postalCode) &&
-    !isEmpty(city)
+    !isEmpty(address.street) &&
+    !isEmpty(address.postalCode) &&
+    !isEmpty(address.city)
   )
 }
 
