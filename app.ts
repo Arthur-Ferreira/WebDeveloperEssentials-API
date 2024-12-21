@@ -1,7 +1,7 @@
 import path from 'path'
 
 import express from 'express'
-import csrf from 'csurf'
+
 import expressSession from 'express-session'
 import dotenv from 'dotenv'
 import cors from 'cors'
@@ -10,7 +10,6 @@ dotenv.config()
 
 import createSessionConfig from './src/util/session'
 import * as db from './src/data/database'
-// import addCsrfTokenMiddleware from './src/middlewares/csrf-token'
 import checkAuthStatusMiddleware from './src/middlewares/check-auth'
 import protectRoutesMiddleware from './src/middlewares/protect-routes'
 // import cartMiddleware from './src/middlewares/cart'
@@ -24,6 +23,7 @@ import baseRoutes from './src/routes/base.routes'
 import adminRoutes from './src/routes/admin.routes'
 import cartRoutes from './src/routes/cart.routes'
 import ordersRoutes from './src/routes/orders.routes'
+import helmet from 'helmet'
 
 const corsOptions = {
   origin: '*', // Permitir todas as origens
@@ -49,12 +49,11 @@ app.use(cors(corsOptions))
 const sessionConfig = createSessionConfig()
 
 app.use(expressSession(sessionConfig))
-// app.use(csrf())
+app.use(helmet())
 
 // app.use(cartMiddleware)
 // app.use(updateCartPricesMiddleware)
 
-// app.use(addCsrfTokenMiddleware)
 app.use(checkAuthStatusMiddleware)
 
 app.use(baseRoutes)

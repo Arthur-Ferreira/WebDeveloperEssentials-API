@@ -18,7 +18,6 @@ function createUserSession(req: Request, user: User, action?: () => void): void 
 
 function destroyUserAuthSession(req: Request): void {
   req.session.uid = null
-  req.session.cookie = { originalMaxAge: req.session.cookie.originalMaxAge }
 }
 
 export default {

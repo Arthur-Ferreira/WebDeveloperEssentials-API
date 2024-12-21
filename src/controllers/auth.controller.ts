@@ -59,7 +59,7 @@ async function signup(req: Request, res: Response, next: NextFunction): Promise<
 
     const isEmailConfirmed = validation.emailIsConfirmed(
       enteredData.email,
-      enteredData.confirmEmail || req.body['confirm-email']
+      enteredData.confirmEmail!
     );
 
     if (!isValidUserDetails || !isEmailConfirmed) {
@@ -102,16 +102,20 @@ async function signup(req: Request, res: Response, next: NextFunction): Promise<
   }
 }
 
+interface ISessionData extends IUser {
+  email: string;
+  password: string;
+}
 
 
 // GET LOGIN
 function getLogin(req: Request, res: Response): void {
-  let sessionData = sessionFlash.getSessionData(req)
+  let sessionData: ISessionData = sessionFlash.getSessionData(req)
 
   if (!sessionData) {
-  sessionData = {
-    email: '',
-    password: ''
+    sessionData = {
+      email: '',
+      password: ''
     }
   }
 
@@ -121,10 +125,12 @@ function getLogin(req: Request, res: Response): void {
 
 // POST LOGIN
 async function login(req: Request, res: Response, next: NextFunction): Promise<void> {
-  const user = new User(req.body.email, req.body.password);
-
   try {
+
+    const user = new User(req.body.email, req.body.password);
     const existingUser = await user.getUserWithSameEmail();
+
+    console.log(existingUser)
 
     if (!existingUser) {
       sessionFlash.flashDataToSession(req, {
@@ -141,7 +147,7 @@ async function login(req: Request, res: Response, next: NextFunction): Promise<v
 
     if (!passwordIsCorrect) {
       sessionFlash.flashDataToSession(req, {
-        errorMessage: 'Invalid credentials - please double-check your email and password!',
+        errorMessage: 'Invalid credentials - please double-check your password!',
         email: user.email,
         password: user.password,
       });
@@ -160,8 +166,15 @@ async function login(req: Request, res: Response, next: NextFunction): Promise<v
 
 function logout(req: Request, res: Response): void {
   authUtil.destroyUserAuthSession(req)
-  // res.redirect('/login')
-  res.status(200).json({ message: 'Logged out successfully' });
+
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Failed to destroy session:', err);
+      res.status(500).json({ message: 'Failed to log out' });
+      return;
+    }
+    res.status(200).json({ message: 'Logged out successfully' });
+  })
 }
 
 export {
