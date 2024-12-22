@@ -1,5 +1,3 @@
-import path from 'path'
-
 import express from 'express'
 
 import expressSession from 'express-session'
@@ -12,8 +10,6 @@ import createSessionConfig from './src/util/session'
 import * as db from './src/data/database'
 import checkAuthStatusMiddleware from './src/middlewares/check-auth'
 import protectRoutesMiddleware from './src/middlewares/protect-routes'
-// import cartMiddleware from './src/middlewares/cart'
-// import updateCartPricesMiddleware from './src/middlewares/update-cart-prices'
 import notFoundMiddleware from './src/middlewares/not-found'
 import errorHandlerMiddleware from './src/middlewares/error-handler'
 
@@ -36,9 +32,6 @@ const corsOptions = {
 const app = express()
 
 const port = process.env.PORT
-
-app.set('view engine', 'ejs')
-app.set('views', path.join(__dirname, 'views'))
 
 app.use('/products/assets', express.static('product-data'))
 app.use(express.urlencoded({ extended: false }))

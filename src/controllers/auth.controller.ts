@@ -6,7 +6,9 @@ import sessionFlash from '../util/session-flash'
 import IUser from '../types'
 import IAddress from '../types'
 
-interface ISessionData extends IUser { }
+interface ISessionData extends IUser { 
+  confirmEmail: string
+}
 
 // GET SIGNUP
 function getSignup(req: Request, res: Response) {
@@ -30,8 +32,8 @@ async function signup(req: Request, res: Response, next: NextFunction): Promise<
   try {
     // Validate required fields
     if (!req.body.email || !req.body.password || !req.body.fullname || !req.body['confirm-email']) {
-      res.status(400).json({ message: 'Missing required fields.' });
-      return;
+      res.status(400).json({ message: 'Missing required fields.' })
+      return
     }
 
     // Create address object only if required fields exist
@@ -39,7 +41,7 @@ async function signup(req: Request, res: Response, next: NextFunction): Promise<
       street: req.body.street,
       postalCode: req.body.postalCode,
       city: req.body.city,
-    };
+    }
 
     const enteredData: ISessionData = {
       email: req.body.email,
@@ -47,7 +49,7 @@ async function signup(req: Request, res: Response, next: NextFunction): Promise<
       password: req.body.password,
       fullname: req.body.fullname,
       address,
-    };
+    }
 
     // Validate user details
     const isValidUserDetails = validation.userDetailsAreValid(
@@ -55,22 +57,22 @@ async function signup(req: Request, res: Response, next: NextFunction): Promise<
       enteredData.password,
       enteredData.fullname!,
       enteredData.address!
-    );
+    )
 
     const isEmailConfirmed = validation.emailIsConfirmed(
       enteredData.email,
       enteredData.confirmEmail!
-    );
+    )
 
     if (!isValidUserDetails || !isEmailConfirmed) {
       sessionFlash.flashDataToSession(req, {
         errorMessage:
           'Invalid input. Password must be at least 6 characters long, and postal code must be 5 characters long.',
         ...enteredData,
-      });
+      })
 
       res.status(400).json({ message: 'Invalid input.', inputData: enteredData });
-      return;
+      return
     }
 
     // Create user instance
@@ -79,38 +81,35 @@ async function signup(req: Request, res: Response, next: NextFunction): Promise<
       enteredData.password,
       enteredData.fullname,
       enteredData.address
-    );
+    )
 
     // Check if user already exists
     if (await user.existsAlready()) {
       sessionFlash.flashDataToSession(req, {
         errorMessage: 'User exists already! Try logging in instead!',
         ...enteredData,
-      });
+      })
 
       res.status(400).json({ message: 'User exists already.', inputData: enteredData });
-      return;
+      return
     }
 
     // Create the new user
-    await user.signup();
-    res.status(201).json({ message: 'User created successfully!' });
+    await user.signup()
+    res.status(201).json({ message: 'User created successfully!' })
 
   } catch (error) {
-    console.error('Error during signup:', error);
-    next(error); // Pass the error to the global error handler
+    console.error('Error during signup:', error)
+    next(error) // Pass the error to the global error handler
   }
 }
 
-interface ISessionData extends IUser {
-  email: string;
-  password: string;
-}
 
+interface ILoginSessionData extends Pick<IUser, 'email' | 'password'> {}
 
 // GET LOGIN
 function getLogin(req: Request, res: Response): void {
-  let sessionData: ISessionData = sessionFlash.getSessionData(req)
+  let sessionData: ILoginSessionData = sessionFlash.getSessionData(req)
 
   if (!sessionData) {
     sessionData = {
@@ -119,48 +118,45 @@ function getLogin(req: Request, res: Response): void {
     }
   }
 
-  // res.render('customer/auth/login', { inputData: sessionData })
-  res.status(200).json({ inputData: sessionData });
+  res.status(200).json({ inputData: sessionData })
 }
 
 // POST LOGIN
 async function login(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
 
-    const user = new User(req.body.email, req.body.password);
-    const existingUser = await user.getUserWithSameEmail();
-
-    console.log(existingUser)
+    const user = new User(req.body.email, req.body.password)
+    const existingUser = await user.getUserWithSameEmail()
 
     if (!existingUser) {
       sessionFlash.flashDataToSession(req, {
         errorMessage: 'Invalid credentials - please double-check your email and password!',
         email: user.email,
         password: user.password,
-      });
+      })
 
-      res.status(401).json({ message: 'Invalid credentials' });
-      return;
+      res.status(401).json({ message: 'Invalid credentials' })
+      return
     }
 
-    const passwordIsCorrect = await user.hasMatchingPassword(existingUser.password);
+    const passwordIsCorrect = await user.hasMatchingPassword(existingUser.password)
 
     if (!passwordIsCorrect) {
       sessionFlash.flashDataToSession(req, {
         errorMessage: 'Invalid credentials - please double-check your password!',
         email: user.email,
         password: user.password,
-      });
+      })
 
-      res.status(401).json({ message: 'Password Incorrect - please double-check your password!' });
-      return;
+      res.status(401).json({ message: 'Password Incorrect - please double-check your password!' })
+      return
     }
 
     authUtil.createUserSession(req, existingUser, () => {
-      res.status(200).json({ message: 'Logged in successfully!' });
+      res.status(200).json({ message: 'Logged in successfully!' })
     });
   } catch (error) {
-    next(error);
+    next(error)
   }
 }
 
@@ -169,11 +165,11 @@ function logout(req: Request, res: Response): void {
 
   req.session.destroy((err) => {
     if (err) {
-      console.error('Failed to destroy session:', err);
-      res.status(500).json({ message: 'Failed to log out' });
-      return;
+      console.error('Failed to destroy session:', err)
+      res.status(500).json({ message: 'Failed to log out' })
+      return
     }
-    res.status(200).json({ message: 'Logged out successfully' });
+    res.status(200).json({ message: 'Logged out successfully' })
   })
 }
 

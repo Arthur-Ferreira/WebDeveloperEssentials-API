@@ -14,9 +14,16 @@ async function getProducts(req: Request, res: Response, next: NextFunction): Pro
   }
 }
 
-function getNewProduct(res: Response): void {
+function getNewProduct(req: Request, res: Response) {
   // res.render('admin/products/new-product')
-  res.status(201).json({ message: "Add new product" })
+  let newProduct: IProduct = {
+    title: "",
+    summary: "",
+    price: 0,
+    description: "",
+    image: "",
+  }
+  res.status(200).json({ inputData: newProduct })
 }
 
 async function createNewProduct(req: Request, res: Response, next: NextFunction): Promise<void> {
