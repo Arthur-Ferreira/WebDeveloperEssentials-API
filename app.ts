@@ -20,6 +20,7 @@ import adminRoutes from './src/routes/admin.routes'
 import cartRoutes from './src/routes/cart.routes'
 import ordersRoutes from './src/routes/orders.routes'
 import helmet from 'helmet'
+import path from 'path'
 
 const corsOptions = {
   origin: '*', // Permitir todas as origens
@@ -33,7 +34,15 @@ const app = express()
 
 const port = process.env.PORT
 
-app.use('/products/assets', express.static('product-data'))
+// Log the path being used for static files
+const staticPath = path.join(__dirname, 'src/product-data/images');
+console.log('Serving static files from:', staticPath);
+
+// Serve static files from the "product-data/images" directory
+app.use('/product-data/images', express.static(staticPath));
+
+// app.use('/products/assets', express.static('product-data'))
+
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cors(corsOptions))
