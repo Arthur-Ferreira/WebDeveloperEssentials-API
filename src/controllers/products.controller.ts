@@ -10,8 +10,6 @@ async function getAllProducts(req: Request, res: Response, next: NextFunction): 
       imagePath: `${req.protocol}://${req.get('host')}/${product.imagePath}`,
       imageUrl: `${req.protocol}://${req.get('host')}${product.imageUrl}`
     }))
-
-    // res.render('customer/products/all-products', { products: products })
     res.json({ products: productsWithImageUrl })
   } catch (error) {
     next(error)
@@ -27,8 +25,6 @@ async function getProductDetails(req: Request, res: Response, next: NextFunction
       imageUrl: `${req.protocol}://${req.get('host')}${product.imageUrl}`
     }
 
-
-    // res.render('customer/products/product-details', { product: product })
     res.json({ product: productsWithImageUrl })
   } catch (error) {
     next(error)
