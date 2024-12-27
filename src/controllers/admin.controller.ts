@@ -22,6 +22,15 @@ async function getProducts(req: Request, res: Response, next: NextFunction): Pro
   }
 }
 
+/**
+ * Handles the creation of a new product by initializing a product object 
+ * with default values and returning it as a JSON response.
+ * 
+ * @param req - The HTTP request object.
+ * @param res - The HTTP response object.
+ * @returns A JSON response containing the initialized product object.
+ * @throws No exceptions are thrown.
+ */
 function getNewProduct(req: Request, res: Response) {
   // res.render('admin/products/new-product')
   let newProduct: IProduct = {
