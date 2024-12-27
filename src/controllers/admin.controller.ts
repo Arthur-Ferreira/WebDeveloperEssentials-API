@@ -3,6 +3,14 @@ import { Request, Response, NextFunction } from "express"
 import Product from '../models/product.model'
 import Order from '../models/order.model'
 
+/**
+ * Retrieves all products from the database and sends them as a JSON response.
+ * @param req - The HTTP request object.
+ * @param res - The HTTP response object.
+ * @param next - The next middleware function in the stack.
+ * @returns A promise that resolves to void.
+ * @throws Will call the next middleware with an error if the database query fails.
+ */
 async function getProducts(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const products = await Product.findAll()
