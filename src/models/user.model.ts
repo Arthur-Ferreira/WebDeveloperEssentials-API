@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcryptjs'
-import mongodb, { ObjectId } from 'mongodb'
+import { ObjectId } from 'mongodb'
 import * as db from '../data/database'
 import IAddress from '../types'
 
