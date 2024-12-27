@@ -1,7 +1,12 @@
-import express from 'express'
+/**
+ * Main application file for setting up and starting the Express server.
+ */
 
+import express from 'express'
 import expressSession from 'express-session'
 import dotenv from 'dotenv'
+import helmet from 'helmet'
+import path from 'path'
 import cors from 'cors'
 
 dotenv.config()
@@ -19,9 +24,10 @@ import baseRoutes from './src/routes/base.routes'
 import adminRoutes from './src/routes/admin.routes'
 import cartRoutes from './src/routes/cart.routes'
 import ordersRoutes from './src/routes/orders.routes'
-import helmet from 'helmet'
-import path from 'path'
 
+/**
+ * CORS configuration options.
+ */
 const corsOptions = {
   origin: '*', // Permitir todas as origens
   // origin: 'http://localhost:5173/', // Permitir apenas esta origem
@@ -31,14 +37,15 @@ const corsOptions = {
 
 
 const app = express()
-
 const port = process.env.PORT
 
-// Log the path being used for static files
-const staticPath = path.join(__dirname, 'product-data/images');
 
-// Serve static files from the "product-data/images" directory
-app.use('/product-data/images', express.static(staticPath));
+// Log the path being used for static files
+const staticPath = path.join(__dirname, 'src/product-data/images');
+console.log('Serving static files from:', staticPath);
+
+// Serve static files from the "product-data/images" directory under the "/products/assets" URL path
+app.use('/products/assets', express.static(staticPath));
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
@@ -62,8 +69,8 @@ app.use('/cart', cartRoutes)
 app.use('/orders', protectRoutesMiddleware, ordersRoutes)
 app.use('/admin', protectRoutesMiddleware, adminRoutes)
 
-app.use(notFoundMiddleware)
 
+app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
 
 db.connectToDatabase()

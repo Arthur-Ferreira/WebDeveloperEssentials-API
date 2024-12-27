@@ -24,7 +24,7 @@ function getSignup(req: Request, res: Response) {
     }
   }
 
-  res.status(200).json({ inputData: sessionData })
+  res.status(200).json(sessionData)
 }
 
 // POST SIGNUP
@@ -118,7 +118,7 @@ function getLogin(req: Request, res: Response): void {
     }
   }
 
-  res.status(200).json({ inputData: sessionData })
+  res.status(200).json(sessionData )
 }
 
 // POST LOGIN
