@@ -3,17 +3,10 @@ import { Request, Response, NextFunction } from "express"
 import Product from '../models/product.model'
 import Order from '../models/order.model'
 
-/**
- * Retrieves all products from the database and sends them as a JSON response.
- * @param req - The HTTP request object.
- * @param res - The HTTP response object.
- * @param next - The next middleware function in the stack.
- * @returns A promise that resolves to void.
- * @throws Will call the next middleware with an error if the database query fails.
- */
 async function getProducts(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const products = await Product.findAll()
+    // res.render('admin/products/all-products', { products: products })
     res.status(200).json({ products: products })
   } catch (error) {
     next(error)
@@ -21,24 +14,9 @@ async function getProducts(req: Request, res: Response, next: NextFunction): Pro
   }
 }
 
-/**
- * Handles the creation of a new product by initializing a product object 
- * with default values and returning it as a JSON response.
- * 
- * @param req - The HTTP request object.
- * @param res - The HTTP response object.
- * @returns A JSON response containing the initialized product object.
- * @throws No exceptions are thrown.
- */
-function getNewProduct(req: Request, res: Response) {
-  let newProduct: IProduct = {
-    title: "",
-    summary: "",
-    price: 0,
-    description: "",
-    image: "",
-  }
-  res.status(200).json({ inputData: newProduct })
+function getNewProduct(res: Response): void {
+  // res.render('admin/products/new-product')
+  res.status(201).json({ message: "Add new product" })
 }
 
 async function createNewProduct(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -58,6 +36,7 @@ async function createNewProduct(req: Request, res: Response, next: NextFunction)
 async function getUpdateProduct(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const product = await Product.findById(req.params.id)
+    // res.render('admin/products/update-product', { product: product })
     res.status(200).json({ product: product })
   } catch (error) {
     next(error)
@@ -80,6 +59,8 @@ async function updateProduct(req: Request, res: Response, next: NextFunction): P
   } catch (error) {
     next(error)
   }
+
+  // res.redirect('/admin/products')
 }
 
 async function deleteProduct(req: Request, res: Response, next: NextFunction): Promise<void> {

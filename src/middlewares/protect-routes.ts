@@ -1,16 +1,12 @@
 import { Request, Response, NextFunction } from 'express'
 
-function protectRoutes(req: Request, res: Response, next: NextFunction) {
+function protectRoutes(req: Request, res: Response, next: NextFunction): void {
   if (!res.locals.isAuth) {
-    return res.status(401).json({
-      message: 'Error at this route'
-    });
+    return res.redirect('/401')
   }
 
   if (req.path.startsWith('/admin') && !res.locals.isAdmin) {
-    return res.status(403).json({
-      message: 'Error'
-    });
+    return res.redirect('/403')
   }
 
   next()

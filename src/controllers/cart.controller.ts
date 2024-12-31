@@ -2,13 +2,6 @@ import { Request, Response, NextFunction } from "express"
 import Product from '../models/product.model'
 import Cart from "../models/cart.model"
 
-
-declare module 'express-session' {
-  interface Session {
-    cart?: Cart; // Add the `cart` property as optional
-  }
-}
-
 let cart = new Cart();
 
 async function getCart(req: Request, res: Response): Promise<void> {
@@ -27,12 +20,11 @@ async function addCartItem(req: Request, res: Response, next: NextFunction): Pro
       res.status(404).json({ message: 'Product not found!' })
       return
     }
-    
-    if (!req.session.cart) {
-      req.session.cart = new Cart();
-    }
+    // const cart = res.locals.cart
 
     cart.addItem(product)
+
+    // req.session.cart = cart
 
     res.status(201).json({
       message: 'Cart updated!',
