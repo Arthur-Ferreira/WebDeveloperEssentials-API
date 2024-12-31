@@ -1,4 +1,3 @@
-
 import Product from './product.model'
 
 class Cart {
@@ -13,22 +12,17 @@ class Cart {
   }
 
   async updatePrices(): Promise<void> {
-    const productIds = this.items
-      .map((item) => item.product._id?.toString())
-      .filter((id): id is string => id !== undefined)
-
+    const productIds = this.items.map((item) => item.product.id)
     const products = await Product.findMultiple(productIds)
     const deletableCartItemProductIds: string[] = []
 
     for (const cartItem of this.items) {
-
-      const product = products.find((prod) => prod.id?.toString() === cartItem.product._id?.toString());
-
+      const product = products.find((prod: IProduct) => prod._id === cartItem.product.id)
 
       if (!product) {
         // product was deleted!
         // "schedule" for removal from cart
-        deletableCartItemProductIds.push(cartItem.product._id!.toString())
+        deletableCartItemProductIds.push(cartItem.product.id)
         continue
       }
 
@@ -40,7 +34,7 @@ class Cart {
 
     if (deletableCartItemProductIds.length > 0) {
       this.items = this.items.filter(function (item) {
-        return deletableCartItemProductIds.indexOf(item.product._id!.toString()) < 0
+        return deletableCartItemProductIds.indexOf(item.product.id) < 0
       })
     }
 
@@ -63,7 +57,7 @@ class Cart {
 
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i]
-      if (item.product._id === product.id) {
+      if (item.product.id === product.id) {
         cartItem.quantity = item.quantity + 1
         cartItem.totalPrice += product.price
         this.items[i] = cartItem
@@ -82,7 +76,7 @@ class Cart {
   updateItem(productId: string, newQuantity: number): { updatedItemPrice: number } | void {
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i]
-      if (item.product._id?.toString() === productId && newQuantity > 0) {
+      if (item.product.id === productId && newQuantity > 0) {
         const cartItem = { ...item }
         const quantityChange = newQuantity - item.quantity
 
@@ -96,7 +90,7 @@ class Cart {
 
         return { updatedItemPrice: cartItem.totalPrice }
 
-      } else if (item.product._id?.toString() === productId && newQuantity <= 0) {
+      } else if (item.product.id === productId && newQuantity <= 0) {
 
         this.items.splice(i, 1)
         this.totalQuantity -= item.quantity

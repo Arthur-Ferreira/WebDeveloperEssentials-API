@@ -4,18 +4,14 @@ class CustomError extends Error {
   code?: number;
 }
 
-function handleErrors(error: CustomError, req: Request, res: Response) {
+function handleErrors(error: CustomError, req: Request, res: Response): void {
   console.log(error)
 
   if (error.code === 404) {
-    return res.status(404).json({
-      message: 'Invalid input.'
-    });
+    return res.status(404).render('shared/404')
   }
 
-  res.status(404).json({
-    message: 'Internal Server Error'
-  });
+  res.status(500).render('shared/500')
 }
 
 export default handleErrors

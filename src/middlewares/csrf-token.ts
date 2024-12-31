@@ -1,9 +1,8 @@
-// import { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction } from 'express'
 
-// function addCsrfToken(req: Request, res: Response, next: NextFunction): void {
-//   res.locals.csrfToken = req.csrfToken()
-//   console.log(req.csrfToken()) // Check CSURF Token
-//   next()
-// }
+function addCsrfToken(req: Request, res: Response, next: NextFunction): void {
+  res.locals.csrfToken = req.csrfToken()
+  next()
+}
 
-// export default addCsrfToken
+export default addCsrfToken
