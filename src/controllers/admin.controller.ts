@@ -14,7 +14,6 @@ import Order from '../models/order.model'
 async function getProducts(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const products = await Product.findAll()
-    // res.render('admin/products/all-products', { products: products })
     res.status(200).json({ products: products })
   } catch (error) {
     next(error)
@@ -32,7 +31,6 @@ async function getProducts(req: Request, res: Response, next: NextFunction): Pro
  * @throws No exceptions are thrown.
  */
 function getNewProduct(req: Request, res: Response) {
-  // res.render('admin/products/new-product')
   let newProduct: IProduct = {
     title: "",
     summary: "",
@@ -60,7 +58,6 @@ async function createNewProduct(req: Request, res: Response, next: NextFunction)
 async function getUpdateProduct(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const product = await Product.findById(req.params.id)
-    // res.render('admin/products/update-product', { product: product })
     res.status(200).json({ product: product })
   } catch (error) {
     next(error)
@@ -83,8 +80,6 @@ async function updateProduct(req: Request, res: Response, next: NextFunction): P
   } catch (error) {
     next(error)
   }
-
-  // res.redirect('/admin/products')
 }
 
 async function deleteProduct(req: Request, res: Response, next: NextFunction): Promise<void> {
