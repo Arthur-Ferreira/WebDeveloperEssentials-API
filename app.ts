@@ -42,10 +42,9 @@ const port = process.env.PORT
 
 // Log the path being used for static files
 const staticPath = path.join(__dirname, 'src/product-data/images');
-console.log('Serving static files from:', staticPath);
 
-// Serve static files from the "product-data/images" directory under the "/products/assets" URL path
-app.use('/products/assets', express.static(staticPath));
+// Serve static files from the "product-data/images" directory under the "/product-data/images" URL path
+app.use('/product-data/images', express.static(staticPath));
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
