@@ -1,12 +1,13 @@
 {
-  "name": "WDE_WebDeveloperEssentials",
-  "version": "2.0.0",
+  "name": "web_developer_essentials",
+  "version": "2.0.1",
   "description": "",
   "main": "build/app.js",
   "scripts": {
     "dev": "ts-node-dev --pretty --respawn app.ts && dotenvx run --env-file=.env -- nodemon",
     "start": "dotenvx run --env-file=.env.production -- nodemon && tsc --outDir ./build",
-    "build": "tsc && vite build",
+    "build": "npm run tsc",
+    "tsc": "tsc -p tsconfig.json && vite build",
     "type-check": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
